@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Verge.Mobile.Views.SendPage">
+    <Grid Padding="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions> 
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Picker Grid.Row="0" Grid.Column="0" Title="Receiver" ItemsSource="{Binding Items}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding Contact}"></Picker>
+        <Button Grid.Row="0" Grid.Column="1" HeightRequest="10" Text="New"   Command="{Binding NewContactCmd}"></Button>
+
+        <StackLayout Grid.Row="1"  Grid.ColumnSpan="2">
+            <Label Text="{Binding Max}"></Label>
+            <Entry Text="{Binding Amount}" Keyboard="Numeric"></Entry>
+            <Label Text="Fee"></Label>
+            <Entry Text="{Binding Fee}" Keyboard="Numeric"></Entry>
+        </StackLayout>
+
+        <StackLayout Grid.Row="2" VerticalOptions="Center" Grid.ColumnSpan="2">
+            <Label Text="Message"></Label>
+            <Editor Text="{Binding Message}"></Editor>
+        </StackLayout>
+        <Button VerticalOptions="End" Text="Send" Grid.Row="3" Grid.ColumnSpan="2" Command="{Binding SendCmd}"></Button>
+       
+    </Grid>
+</ContentPage>

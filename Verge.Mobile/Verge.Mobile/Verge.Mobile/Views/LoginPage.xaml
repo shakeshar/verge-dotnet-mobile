@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Verge.Mobile.Views.LoginPage">
+    <Grid >
+        <!--<Image Source="logo.png" Aspect="AspectFill" Opacity="0.3"  />-->
+        <Grid Style="{StaticResource CenterContent}" >
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Image Source="stratis_logo.png" VerticalOptions="End" Margin="55"     />
+            <StackLayout Grid.Row="1">                
+                <Entry Text="{Binding Username}" HorizontalTextAlignment="Center" IsPassword="True" Placeholder="Supersecret privatekey"></Entry>
+                <Button Margin="0,20,0,0" Text="Login" Command="{Binding LoginCmd}"></Button>
+            </StackLayout>
+            <ActivityIndicator Grid.Row="1"  IsRunning="{Binding IsBusy}" VerticalOptions="Center" IsVisible="{Binding IsBusy}"/>
+            
+
+        </Grid>
+    </Grid>
+</ContentPage>

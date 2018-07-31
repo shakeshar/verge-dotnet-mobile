@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Verge.Mobile.Views.NewContactPage">
+    <Grid Padding="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>          
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Entry  Grid.Row="0" Grid.ColumnSpan="2" Placeholder="Name" Text="{Binding Name}" ></Entry>
+        <Entry  Grid.Row="1" Placeholder="Address" Text="{Binding Address}"></Entry>
+        <Button Grid.Row="1" Grid.Column="1" Text="Generate" Command="{Binding GenerateCmd}"></Button>
+        <Button Text="Save" Grid.ColumnSpan="2" Grid.Row="2" VerticalOptions="End"  Command="{Binding SaveCmd}"></Button>
+    </Grid>
+</ContentPage>

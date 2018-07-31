@@ -7,7 +7,7 @@ ____   _________________________   ________ ___________
    \___/   /_______  / |____|_  / \______  //_______  /
                    \/         \/         \/         \/
 ```
-# A dotnet VERGE RPCClient
+# a CrossPlattform application built with Xamarin
 verge-dotnet-mobile is a crossplatform app built with Xamarin
 
 It is a fork of the excellent Kapitalize Bitcoin Client (now removed from GitHub) intended for use with VERGE. The purpose of this repository is:

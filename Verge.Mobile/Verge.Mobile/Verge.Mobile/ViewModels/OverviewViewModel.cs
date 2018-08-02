@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Verge.Core.Client;
 using Verge.Mobile.Models;
 using Verge.Mobile.Services;
 using Xamarin.Forms;
@@ -13,7 +14,7 @@ namespace Verge.Mobile.ViewModels
     {
        
         private IOverviewStatus model;
-
+        
         #region Properties
         public ICommand LoginCmd { get; private set; }
         
@@ -29,7 +30,16 @@ namespace Verge.Mobile.ViewModels
         public OverviewViewModel()
         {
             LoginCmd = new Command(async () => await Login(), () => CanStart);
-            model = Storage.GetItem<OverviewStatus>("overview");
+            model = ViewModelLocator.Resolve<IOverviewStatus>();
+           
+        }
+        public override async Task OnApperaing()
+        {
+            IsBusy = true;
+            base.OnApperaing();
+            await model.Load();
+            base.OnPropertyChanged(nameof(Balance));
+            IsBusy = false;
         }
         private async Task Login()
         {

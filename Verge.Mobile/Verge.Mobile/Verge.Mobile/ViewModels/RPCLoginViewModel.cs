@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Verge.Core.Client;
 using Verge.Mobile.Services;
 using Xamarin.Forms;
 
@@ -10,7 +11,7 @@ namespace Verge.Mobile.ViewModels
 
     public class RPCLoginViewModel : BaseViewModel
     {
-        private string key => "test";
+      
         private bool canStart = true;
         private IRPCCredentials model;
 
@@ -41,7 +42,7 @@ namespace Verge.Mobile.ViewModels
         public RPCLoginViewModel()
         {
             LoginCmd = new Command(async () => await Login(), () => canStart);
-            model = Storage.GetItem<RPCCredentials>(key);
+            model = Storage.GetItem<RPCCredentials>(ConstantStrings.RPC_LOGIN_CREDENTIALS_KEY);
         }
         private async Task Login()
         {

@@ -24,10 +24,10 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
                                 <ColumnDefinition Width="8*"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Label Grid.Row="0" Grid.Column="1"  HorizontalOptions="Start" Text="{Binding Date}" />
-                            <Label Grid.Row="0" Grid.Column="2" HorizontalOptions="Start" Text="{Binding Amount}" />
+                            <Label Grid.Row="0" Grid.Column="2" HorizontalOptions="Start" HorizontalTextAlignment="End" Text="{Binding Amount}" />
                             <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="Start" Text="{Binding Address}" />
                             <Label Grid.RowSpan="2" Grid.Column="0"  VerticalOptions="Center" Text="{Binding TransactionType}" />
                         </Grid>

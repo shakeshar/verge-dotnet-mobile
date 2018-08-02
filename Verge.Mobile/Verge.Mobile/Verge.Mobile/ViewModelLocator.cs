@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using Verge.Core.Client;
+using Verge.Mobile.Factories;
 using Verge.Mobile.Models;
 using Verge.Mobile.Services;
 using Verge.Mobile.ViewModels;
@@ -14,7 +16,8 @@ namespace Verge.Mobile
         static ViewModelLocator()
         {
             Func<IServiceProvider, IDictionary<string, object>> cacheFactory = (px) => App.Current.Properties;
-
+            Func<IServiceProvider, IVergeClient> vergeClientFunc = (px) => VergeClientFactory.Create();
+            
             #region ViewModels
             serviceProviderCollection.AddSingleton<PaymentViewModel>();
             serviceProviderCollection.AddSingleton<OverviewViewModel>();
@@ -23,8 +26,6 @@ namespace Verge.Mobile
             serviceProviderCollection.AddSingleton<MainViewModel>();                    
             serviceProviderCollection.AddSingleton<NewContactViewModel>();
             serviceProviderCollection.AddSingleton<RPCLoginViewModel>();
-
-            serviceProviderCollection.AddTransient<TransactionsViewModel>();
             serviceProviderCollection.AddTransient<SendViewModel>();
             #endregion
             Func<IServiceProvider, IDataStore<Contact>> contactDataStore = (px) =>
@@ -50,12 +51,14 @@ namespace Verge.Mobile
                 return App.Current.Properties[key] as DataStore<Contact>;
 
             };
-
-
+            
             serviceProviderCollection.AddSingleton(typeof(IStorageService), typeof(StorageService));
             serviceProviderCollection.AddSingleton<IDictionary<string, object>>(cacheFactory);
             serviceProviderCollection.AddSingleton<INavigationService, NavigationService>();
             serviceProviderCollection.AddSingleton<IDataStore<Contact>>(contactDataStore);
+            serviceProviderCollection.AddSingleton<IVergeClient>(vergeClientFunc);
+            serviceProviderCollection.AddSingleton<IOverviewStatus, OverviewStatus>();
+            serviceProviderCollection.AddSingleton<ITransaction, Transaction>();
             serviceProvider = serviceProviderCollection.BuildServiceProvider();
             SetTranslation();
         }

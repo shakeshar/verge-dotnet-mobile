@@ -13,6 +13,11 @@
     <DebugType>Full</DebugType>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Verge.Core">
+      <HintPath>..\..\..\..\verge-dotnet\verge-dotnet\Verge.Core\bin\Release\netstandard2.0\Verge.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="Views\RPCLoginPage.xaml.cs">
       <DependentUpon>RPCLoginPage.xaml</DependentUpon>
     </Compile>

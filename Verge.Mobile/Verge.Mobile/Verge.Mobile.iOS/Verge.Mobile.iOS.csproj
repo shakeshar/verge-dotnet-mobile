@@ -140,4 +140,10 @@
       <Name>Verge.Mobile</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\slideout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\slideout%402x.png" />
+  </ItemGroup>
 </Project>

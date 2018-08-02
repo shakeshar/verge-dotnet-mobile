@@ -24,6 +24,7 @@
             </Style>
             <Style  TargetType="Button">
                 <Setter Property="TextColor" Value="{StaticResource LightTextColor}"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource DarkBackgroundColor}"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

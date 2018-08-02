@@ -9,57 +9,30 @@ namespace Verge.Mobile.ViewModels
     {
 
 
+        ITransaction model;
         public TransactionsViewModel()
         {
-            Transaction();
+            model = ViewModelLocator.Resolve<ITransaction>();
+            Load();
+            
         }
         public override async Task OnApperaing()
         {
-            await Transaction();
+            await Load();
         }
-        private async Task Transaction()
+        public async Task Load()
         {
             IsBusy = true;
-            Items.Add(new TransactionsItemViewModel()
+            await model.Load("main");
+            foreach (var item in model.Transactions)
             {
-                Amount = 10m,
-                Address = "DQmAPDFTEkYVAdfT3WdRoTGb9XpcKoRGJ2",
-                 Date = DateTime.Now,
-                  TransactionType = TransactionType.From
-                   
-            });
-            Items.Add(new TransactionsItemViewModel()
-            {
-                Amount = 10m,
-                Address = "DQmAPDFTEkYVAdfT3WdRoTGb9XpcKoRGJ2",
-                Date = DateTime.Now,
-                TransactionType = TransactionType.To
-            });
-            Items.Add(new TransactionsItemViewModel()
-            {
-                Amount = 10m,
-                Address = "DQmAPDFTEkYVAdfT3WdRoTGb9XpcKoRGJ2",
-                Date = DateTime.Now,
-                TransactionType = TransactionType.To
-            });
-            Items.Add(new TransactionsItemViewModel()
-            {
-                Amount = 10m,
-                Address = "DQmAPDFTEkYVAdfT3WdRoTGb9XpcKoRGJ2",
-                Date = DateTime.Now,
-                TransactionType = TransactionType.From
-            });
-            //var result = await App.Account.GetTransactions();
-            //foreach (var item in result.Operations)
-            //{
-            //    Items.Add(new
-            //    {
-            //        Amount = item.Amount.ToString(),
-            //        Confirmations = item.Confirmations.ToString(),
-            //        FirstSeen = item.FirstSeen.ToString(),
-            //        TransactionId = item.TransactionId.ToString()
-            //    });              
-            //}
+                Items.Add(new TransactionsItemViewModel()
+                {
+                    Address = item.address,
+                    Amount = $"{Convert.ToDecimal(item.amount)} XVG",
+                    Date = DateTimeOffset.FromUnixTimeMilliseconds((long)item.timereceived).ToString()
+                });
+            }
             IsBusy = false;
         }
     }
@@ -71,9 +44,9 @@ namespace Verge.Mobile.ViewModels
     public class TransactionsItemViewModel
     {
         public TransactionType TransactionType { get; set; }
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
         public string Address { get; set; }
-        public decimal Amount { get; set; }
+        public string Amount { get; set; }
 
     }
 

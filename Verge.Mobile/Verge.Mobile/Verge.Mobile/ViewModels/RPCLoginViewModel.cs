@@ -1,44 +1,48 @@
 ﻿using System;
+using System.Collections;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Verge.Mobile.Services;
 using Xamarin.Forms;
 
 namespace Verge.Mobile.ViewModels
 {
-    public class LoginViewModel : CollectionViewModel<object>
+
+    public class RPCLoginViewModel : BaseViewModel
     {
+        private string key => "test";
         private bool canStart = true;
-       
-      
+        private IRPCCredentials model;
+
+        #region Properties
         public ICommand LoginCmd { get; private set; }
-        public ICommand RPCLoginPageCmd { get; private set; }
         public ICommand GuestCmd { get; private set; }
         public string Username
         {
-            get { return model?.Username; }
+            get { return model?.Username ; }
             set { model.Username = value; base.OnPropertyChanged(); }
         }
-
+        public string Url
+        {
+            get { return model?.Url; }
+            set { model.Url = value; base.OnPropertyChanged(); }
+        }
         public string Password
         {
             get { return model?.Password; }
             set { model.Password = value; base.OnPropertyChanged(); }
         }
-
-        IRPCCredentials model;
-        public LoginViewModel()
+        public int Port
+        {
+            get { return model.Port; }
+            set { model.Port = value; base.OnPropertyChanged(); }
+        }
+        #endregion
+        public RPCLoginViewModel()
         {
             LoginCmd = new Command(async () => await Login(), () => canStart);
-            RPCLoginPageCmd = new Command(async () => await NavigationService.NavigateToAsync<RPCLoginViewModel>(false));
-
-            model = Storage.GetItem<RPCCredentials>("test");
-           
+            model = Storage.GetItem<RPCCredentials>(key);
         }
-        public override async Task OnApperaing()
-        {
-           
-        }
-
         private async Task Login()
         {
             canStart = false;
@@ -58,6 +62,18 @@ namespace Verge.Mobile.ViewModels
             canStart = true;
             IsBusy = false;
             ((Command)LoginCmd).ChangeCanExecute();
+        }
+    }
+    public class RPCCredentials :  IRPCCredentials
+    {
+        public string Url { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public int Port { get; set; }
+
+        public RPCCredentials()
+        {
+            
         }
     }
 }

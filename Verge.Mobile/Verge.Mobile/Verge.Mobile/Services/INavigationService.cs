@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Verge.Mobile.ViewModels;
@@ -12,11 +13,13 @@ namespace Verge.Mobile.Services
     {
         BaseViewModel PreviousPageViewModel { get; }
         Task InitializeAsync();
-        Task NavigateToAsync<TViewModel>(bool push= true) where TViewModel : BaseViewModel;
+        Task NavigateToAsync<TViewModel>(bool push = true) where TViewModel : BaseViewModel;
         Task NavigateToAsync(Type viewmodel, bool push = true);
         Task NavigateToAsync<TViewModel>(object parameter) where TViewModel : BaseViewModel;
         Task Display(string message);
         Task RemoveLastFromBackStackAsync();
+        Task RemoveCurrent();
+        Page CurrentPage();
 
         Task RemoveBackStackAsync();
     }
@@ -25,21 +28,21 @@ namespace Verge.Mobile.Services
         //private readonly ISettingsService _settingsService;
         public async Task Display(string message)
         {
-           await Application.Current.MainPage.DisplayAlert("", message, "ok");
+            await Application.Current.MainPage.DisplayAlert("", message, "ok");
         }
         public BaseViewModel PreviousPageViewModel
         {
             get
             {
-                
-                var mainPage = Application.Current.MainPage as MasterDetailPage;
-                var viewModel = mainPage.Detail.Navigation.NavigationStack[mainPage.Detail.Navigation.NavigationStack.Count - 2].BindingContext;
+
+                var mainPage = Application.Current.MainPage as NavigationPage;
+                var viewModel = mainPage.Navigation.NavigationStack[mainPage.Navigation.NavigationStack.Count - 2].BindingContext;
                 return viewModel as BaseViewModel;
             }
         }
         public Task InitializeAsync()
         {
-            return NavigateToAsync<LoginViewModel>();
+            return NavigateToAsync<RPCLoginViewModel>();
         }
 
         public Task NavigateToAsync<TViewModel>(bool push = true) where TViewModel : BaseViewModel
@@ -55,14 +58,28 @@ namespace Verge.Mobile.Services
             return InternalNavigateToAsync(typeof(TViewModel), parameter);
         }
 
-        public async Task RemoveLastFromBackStackAsync()
+
+        public Task RemoveLastFromBackStackAsync()
         {
-            if (Application.Current.MainPage is LoginPage) await  Task.FromResult(true);
-            var mainPage = Application.Current.MainPage as MainPage;
+            if (Application.Current.MainPage is LoginPage) return Task.FromResult(true);
+            var mainPage = Application.Current.MainPage as MasterDetailPage;
 
             if (mainPage != null)
             {
-               await mainPage.Detail.Navigation.PopAsync();
+                mainPage.Detail.Navigation.RemovePage(
+                    mainPage.Detail.Navigation.NavigationStack[mainPage.Detail.Navigation.NavigationStack.Count - 2]);
+            }
+
+            return Task.FromResult(true);
+        }
+        public async Task RemoveCurrent()
+        {
+            if (Application.Current.MainPage is LoginPage) await Task.FromResult(true);
+            var mainPage = Application.Current.MainPage as MasterDetailPage;
+
+            if (mainPage != null)
+            {
+                await mainPage.Detail.Navigation.PopAsync();
             }
 
             await Task.FromResult(true);
@@ -71,6 +88,9 @@ namespace Verge.Mobile.Services
         public Task RemoveBackStackAsync()
         {
             if (Application.Current.MainPage is LoginPage) return Task.FromResult(true);
+
+
+
             var mainPage = Application.Current.MainPage as NavigationPage;
 
             if (mainPage != null)
@@ -87,18 +107,18 @@ namespace Verge.Mobile.Services
 
         private async Task InternalNavigateToAsync(Type viewModelType, object parameter, bool push = true)
         {
+            var currentPage = CurrentPage();
+            if (currentPage?.BindingContext is BaseViewModel) (currentPage.BindingContext as BaseViewModel).OnDisappearing();
             Page page = CreatePage(viewModelType, parameter);
+
 
 
             if (page is LoginPage)
             {
                 Application.Current.MainPage = page;
             }
-            else if (page is MainPage)
-            {
-                Application.Current.MainPage = page;
-            }            
-            else
+
+            else if (Application.Current.MainPage is MasterDetailPage)
             {
                 var navigationPage = Application.Current.MainPage as MasterDetailPage;
                 if (navigationPage != null)
@@ -109,14 +129,27 @@ namespace Verge.Mobile.Services
                         navigationPage.Detail = new NavigationPage(page);
                 }
             }
+            else
+            {
+                Application.Current.MainPage = page;
+            }
+            BaseViewModel viewmodel = (page.BindingContext as BaseViewModel);
+            await viewmodel.InitializeAsync(parameter);
+            viewmodel.OnApperaing();
+        }
+        public Page CurrentPage()
+        {
 
-            await (page.BindingContext as BaseViewModel).InitializeAsync(parameter);
+            var navigation = Application.Current.MainPage as MasterDetailPage;
+            if (navigation == null) return Application.Current.MainPage;
+            //var result = await navigation.Detail.DisplayActionSheet("Kamera", "Cancel", null, Camera, Gallery);
+            return ((NavigationPage)navigation.Detail).CurrentPage;
         }
 
         private Type GetPageTypeForViewModel(Type viewModelType)
         {
-            var name = viewModelType.FullName;
-            var viewName = viewModelType.FullName.Replace(".ViewModels", ".Views").Replace("ViewModel", "Page");
+            var viewName = viewModelType.FullName.Replace("Model", string.Empty);
+            viewName =viewName.Remove( viewName.Length - 4, 4) + "Page";
             var viewModelAssemblyName = viewModelType.GetTypeInfo().Assembly.FullName;
             var viewAssemblyName = string.Format(CultureInfo.InvariantCulture, "{0}, {1}", viewName, viewModelAssemblyName);
             var viewType = Type.GetType(viewAssemblyName);
@@ -125,6 +158,7 @@ namespace Verge.Mobile.Services
 
         private Page CreatePage(Type viewModelType, object parameter)
         {
+
             Type pageType = GetPageTypeForViewModel(viewModelType);
             if (pageType == null)
             {
@@ -132,7 +166,10 @@ namespace Verge.Mobile.Services
             }
 
             Page page = Activator.CreateInstance(pageType) as Page;
-            page.BindingContext = ViewModelLocator.Resolve(viewModelType);
+            var x = ViewModelLocator.Resolve(viewModelType);
+            if (x == null) throw new Exception("ViewModel not configured");
+            
+            page.BindingContext = x;
 
             return page;
         }

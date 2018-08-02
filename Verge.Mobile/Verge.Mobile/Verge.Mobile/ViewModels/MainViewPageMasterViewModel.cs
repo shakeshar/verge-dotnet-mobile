@@ -13,7 +13,8 @@ namespace Verge.Mobile.ViewModels
         {
             MenuItems = new ObservableCollection<MainViewPageMenuItem>(new[]
             {
-                    new MainViewPageMenuItem(typeof(TransactionsViewModel)) {  Id = 0, Title = "Start".ToUpper() },
+                new MainViewPageMenuItem(typeof(OverviewViewModel)) {  Id = 0, Title = "Start".ToUpper() },
+                    new MainViewPageMenuItem(typeof(TransactionsViewModel)) {  Id = 0, Title = "Transactions".ToUpper() },
                     new MainViewPageMenuItem(typeof(SendViewModel)) {   Id = 0, Title = "Send".ToUpper() },
                     new MainViewPageMenuItem(typeof(LoginViewModel)) { Id = 0, Title = "Logout".ToUpper() }
             });

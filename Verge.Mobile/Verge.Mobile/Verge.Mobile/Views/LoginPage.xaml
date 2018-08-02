@@ -12,13 +12,12 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <Image Source="stratis_logo.png" VerticalOptions="End" Margin="55"     />
-            <StackLayout Grid.Row="1">                
-                <Entry Text="{Binding Username}" HorizontalTextAlignment="Center" IsPassword="True" Placeholder="Supersecret privatekey"></Entry>
-                <Button Margin="0,20,0,0" Text="Login" Command="{Binding LoginCmd}"></Button>
+            <StackLayout Grid.Row="1">                 
+                <Entry Text="{Binding Username}" HorizontalTextAlignment="Center" IsPassword="False" Placeholder="Supersecret privatekey"></Entry>
+                <Button  Text="Login" Command="{Binding LoginCmd}"></Button>
+                <Button  Text="RPC Login" Command="{Binding RPCLoginPageCmd}"></Button>
             </StackLayout>
             <ActivityIndicator Grid.Row="1"  IsRunning="{Binding IsBusy}" VerticalOptions="Center" IsVisible="{Binding IsBusy}"/>
-            
-
         </Grid>
     </Grid>
 </ContentPage>

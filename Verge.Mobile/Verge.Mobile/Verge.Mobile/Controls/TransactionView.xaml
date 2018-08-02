@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:design="clr-namespace:Verge.Mobile;assembly=Verge.Mobile"
+              BindingContext="{x:Static design:ViewModelLocator.TransactionViewModel}"
+             x:Class="Verge.Mobile.Controls.TransactionView">
+    <StackLayout>
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>           
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>-->
+        <ListView x:Name="MenuItemsListView"  VerticalOptions="Center"
+              SeparatorVisibility="Default"
+              HasUnevenRows="False"
+              ItemsSource="{Binding Items}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="8*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0" Grid.Column="1"  HorizontalOptions="Start" Text="{Binding Date}" />
+                            <Label Grid.Row="0" Grid.Column="2" HorizontalOptions="Start" Text="{Binding Amount}" />
+                            <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="Start" Text="{Binding Address}" />
+                            <Label Grid.RowSpan="2" Grid.Column="0"  VerticalOptions="Center" Text="{Binding TransactionType}" />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ActivityIndicator Grid.RowSpan="3"  IsRunning="{Binding IsBusy}" VerticalOptions="Center" IsVisible="{Binding IsBusy}"/>
+        <Button Grid.Row="1" Text="More"></Button>
+    </StackLayout>
+</ContentView>

@@ -1,17 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Verge.Mobile.Models;
 using Verge.Mobile.Services;
 
 namespace Verge.Mobile.ViewModels
 {
-    public class TransactionsViewModel : CollectionViewModel<object>
+    public class TransactionsViewModel : CollectionViewModel<TransactionsItemViewModel>
     {
-        public IDataStore<Contact> DataStore;
-        private bool canStart = true;
 
-        public TransactionsViewModel(IDataStore<Contact> dataStore)
+
+        public TransactionsViewModel()
         {
-            this.DataStore = dataStore;
             Transaction();
         }
         public override async Task OnApperaing()
@@ -21,6 +20,35 @@ namespace Verge.Mobile.ViewModels
         private async Task Transaction()
         {
             IsBusy = true;
+            Items.Add(new TransactionsItemViewModel()
+            {
+                Amount = 10m,
+                Address = "DQmAPDFTEkYVAdfT3WdRoTGb9XpcKoRGJ2",
+                 Date = DateTime.Now,
+                  TransactionType = TransactionType.From
+                   
+            });
+            Items.Add(new TransactionsItemViewModel()
+            {
+                Amount = 10m,
+                Address = "DQmAPDFTEkYVAdfT3WdRoTGb9XpcKoRGJ2",
+                Date = DateTime.Now,
+                TransactionType = TransactionType.To
+            });
+            Items.Add(new TransactionsItemViewModel()
+            {
+                Amount = 10m,
+                Address = "DQmAPDFTEkYVAdfT3WdRoTGb9XpcKoRGJ2",
+                Date = DateTime.Now,
+                TransactionType = TransactionType.To
+            });
+            Items.Add(new TransactionsItemViewModel()
+            {
+                Amount = 10m,
+                Address = "DQmAPDFTEkYVAdfT3WdRoTGb9XpcKoRGJ2",
+                Date = DateTime.Now,
+                TransactionType = TransactionType.From
+            });
             //var result = await App.Account.GetTransactions();
             //foreach (var item in result.Operations)
             //{
@@ -34,6 +62,19 @@ namespace Verge.Mobile.ViewModels
             //}
             IsBusy = false;
         }
-    }        
-    
+    }
+    public enum TransactionType
+    {
+        From,
+        To
+    }
+    public class TransactionsItemViewModel
+    {
+        public TransactionType TransactionType { get; set; }
+        public DateTime Date { get; set; }
+        public string Address { get; set; }
+        public decimal Amount { get; set; }
+
+    }
+
 }

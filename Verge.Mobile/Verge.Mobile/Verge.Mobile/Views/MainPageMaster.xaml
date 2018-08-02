@@ -4,7 +4,7 @@
              x:Class="Verge.Mobile.Views.MainPageMaster"
              Title="Master">
   <StackLayout>
-    <ListView x:Name="MenuItemsListView" BackgroundColor="White"
+        <ListView x:Name="MenuItemsListView" BackgroundColor="{StaticResource  DarkBackgroundColor}"
               SeparatorVisibility="None"
               HasUnevenRows="true" 
               ItemsSource="{Binding MenuItems}">

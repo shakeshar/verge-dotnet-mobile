@@ -14,11 +14,11 @@ namespace Verge.Mobile.Views
         {
             this.accountService = accountServiceSettings;
             InitializeComponent();
-            accountService.NavigateToAsync<StartViewModel>();
+            accountService.NavigateToAsync<OverviewViewModel>();
 
         }
         public MainPageDetail()
-        {
+        {            
             InitializeComponent();
         }
     }

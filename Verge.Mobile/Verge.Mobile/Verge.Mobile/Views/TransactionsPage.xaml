@@ -31,7 +31,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <!--<ActivityIndicator  IsRunning="{Binding IsBusy}" VerticalOptions="Center" IsVisible="{Binding IsBusy}"/>
-        <Button Text="Tet"></Button>-->
+        <ActivityIndicator  IsRunning="{Binding IsBusy}" VerticalOptions="Center" IsVisible="{Binding IsBusy}"/>
+        <!--<Button Text="Tet"></Button>-->
     </Grid>
 </ContentPage>

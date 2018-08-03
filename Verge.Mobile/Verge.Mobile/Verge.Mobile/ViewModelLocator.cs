@@ -29,34 +29,11 @@ namespace Verge.Mobile
             serviceProviderCollection.AddSingleton<RPCLoginViewModel>();
             serviceProviderCollection.AddTransient<SendViewModel>();
             #endregion
-            Func<IServiceProvider, IDataStore<Contact>> contactDataStore = (px) =>
-            {
-                //Ugly solution, fix this!
-                string key = "contacts";
-                if (!App.Current.Properties.ContainsKey(key))
-                {
-                    var store = new DataStore<Contact>();
-                    App.Current.Properties.Add(key, store);
-                    return store;
-                }
-                var x = App.Current.Properties[key];
-                if (x != null)
-                {
-                    var result = Newtonsoft.Json.JsonConvert.DeserializeObject<DataStore<Contact>>(x.ToString());
-                    App.Current.Properties[key] = result;
-                }
-                else
-                {
-                    App.Current.Properties[key] = new DataStore<Contact>();
-                }
-                return App.Current.Properties[key] as DataStore<Contact>;
-
-            };
+            
             
             serviceProviderCollection.AddSingleton(typeof(IStorageService), typeof(StorageService));
             serviceProviderCollection.AddSingleton<IDictionary<string, object>>(cacheFactory);
             serviceProviderCollection.AddSingleton<INavigationService, NavigationService>();
-            serviceProviderCollection.AddSingleton<IDataStore<Contact>>(contactDataStore);         
             serviceProviderCollection.AddSingleton<IOverviewStatus, OverviewStatus>();
             serviceProviderCollection.AddSingleton<ITransaction, Transaction>();
 
@@ -109,26 +86,26 @@ namespace Verge.Mobile
                 Address = "adajölsdjöalsdjl",
                 Amount = "100 XVG",
                 Date = DateTime.Now.ToString(),
-                TransactionType = TransactionType.To
+                TransactionType = TransactionType.Receive
             });
             Items.Add(new TransactionsItemViewModel()
             {
                 Address = "adajölsdjöalsdjl",
                 Amount = "100 XVG",
                 Date = DateTime.Now.ToString(),
-                TransactionType = TransactionType.From
+                TransactionType = TransactionType.Receive
             }); Items.Add(new TransactionsItemViewModel()
             {
                 Address = "adajölsdjöalsdjl",
                 Amount = "100 XVG",
                 Date = DateTime.Now.ToString(),
-                TransactionType = TransactionType.To
+                TransactionType = TransactionType.Send
             }); Items.Add(new TransactionsItemViewModel()
             {
                 Address = "adajölsdjöalsdjl",
                 Amount = "100 XVG",
                 Date = DateTime.Now.ToString(),
-                TransactionType = TransactionType.From
+                TransactionType = TransactionType.Send
             });
         }
     }

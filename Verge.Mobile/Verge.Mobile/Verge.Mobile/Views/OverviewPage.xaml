@@ -10,6 +10,11 @@
     <StackLayout Spacing="1">
      
         <Grid  VerticalOptions="Start" Grid.Row="0" BackgroundColor="{StaticResource VergePrimary3}">
+            <Grid.Resources>
+                <Style x:Key="LabelSize" TargetType="Label">
+                    <Setter Property="FontSize" Value="Medium"></Setter>
+                </Style>
+            </Grid.Resources>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -19,12 +24,12 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Label FontSize="Large" Grid.Row="0" Grid.Column="0"  Text="Balance"></Label>
-            <Label FontSize="Large" Grid.Row="0" Grid.Column="1"  Text="{Binding Balance}"></Label>
-            <Label FontSize="Large" Grid.Row="1" Grid.Column="0"  Text="Unconfirmed"></Label>
-            <Label FontSize="Large" Grid.Row="1" Grid.Column="1"  Text="{Binding Unconfirmed}"></Label>
+            <Label Style="{StaticResource LabelSize}" Grid.Row="0" Grid.Column="0"  Text="Balance"></Label>
+            <Label Style="{StaticResource LabelSize}" Grid.Row="0" Grid.Column="1"  Text="{Binding Balance}"></Label>
+            <Label Style="{StaticResource LabelSize}" Grid.Row="1" Grid.Column="0"  Text="Unconfirmed"></Label>
+            <Label Style="{StaticResource LabelSize}" Grid.Row="1" Grid.Column="1"  Text="{Binding Unconfirmed}"></Label>
         </Grid>
-        <controls:TransactionView    Grid.Row="1" BackgroundColor="{StaticResource LightTextColor}"></controls:TransactionView>
+        <controls:TransactionView Grid.Row="1" BackgroundColor="{StaticResource LightTextColor}"></controls:TransactionView>
         <controls:PaymentView     Grid.Row="2" BackgroundColor="{StaticResource LightTextColor}"></controls:PaymentView>
     </StackLayout >
 </ContentPage>

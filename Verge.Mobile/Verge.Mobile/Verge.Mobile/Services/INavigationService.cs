@@ -108,8 +108,8 @@ namespace Verge.Mobile.Services
         private async Task InternalNavigateToAsync(Type viewModelType, object parameter, bool push = true)
         {
             var currentPage = CurrentPage();
-            if (currentPage?.BindingContext is BaseViewModel) (currentPage.BindingContext as BaseViewModel).OnDisappearing();
-            Page page = CreatePage(viewModelType, parameter);
+            if (currentPage?.BindingContext is BaseViewModel)      (currentPage.BindingContext as BaseViewModel).OnDisappearing();
+                Page page = CreatePage(viewModelType, parameter);
 
 
 
@@ -123,6 +123,7 @@ namespace Verge.Mobile.Services
                 var navigationPage = Application.Current.MainPage as MasterDetailPage;
                 if (navigationPage != null)
                 {
+                    //Hmmmm dosen't work as intendet
                     if (push)
                         await navigationPage.Detail.Navigation.PushAsync(page);
                     else
@@ -139,10 +140,8 @@ namespace Verge.Mobile.Services
         }
         public Page CurrentPage()
         {
-
             var navigation = Application.Current.MainPage as MasterDetailPage;
             if (navigation == null) return Application.Current.MainPage;
-            //var result = await navigation.Detail.DisplayActionSheet("Kamera", "Cancel", null, Camera, Gallery);
             return ((NavigationPage)navigation.Detail).CurrentPage;
         }
 

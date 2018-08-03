@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Verge.Mobile.Models;
@@ -9,32 +10,37 @@ namespace Verge.Mobile.ViewModels
 {
     public class TransactionsViewModel : CollectionViewModel<TransactionsItemViewModel>
     {
-        
+       
         public ICommand ReloadCmd { get; private set; }
+        public ICommand SelectedItemCmd { get; private set; }
         ITransaction model;
         public TransactionsViewModel()
         {
             model = ViewModelLocator.Resolve<ITransaction>();
             ReloadCmd = new Command(async () => await Load() );
-            Load();
+            SelectedItemCmd = new Command(async () =>
+            {
+                await NavigationService.NavigateToAsync<SendViewModel>(SelectedItem);
+            });
             
         }
-        public override async Task OnApperaing()
-        {
-            await Load();
-        }
+
         public async Task Load()
         {
             IsBusy = true;
-            
-            await model.Load("main");
-            foreach (var item in model.Transactions)
+
+            await model.Load();
+            Items.Clear();
+            foreach (var item in model.Transactions.OrderByDescending(px => px.timereceived))
             {
+                if (item.category == null) continue;
                 Items.Add(new TransactionsItemViewModel()
                 {
+                    TransactionType = (item.category.Length == 4 ? TransactionType.Send : TransactionType.Receive),
                     Address = item.address,
                     Amount = $"{Convert.ToDecimal(item.amount)} XVG",
-                    Date = DateTimeOffset.FromUnixTimeMilliseconds((long)item.timereceived).ToString()
+                    Category = item.category,
+                    Date = DateTimeOffset.FromUnixTimeSeconds(item.timereceived).ToString()
                 });
             }
             IsBusy = false;
@@ -42,8 +48,8 @@ namespace Verge.Mobile.ViewModels
     }
     public enum TransactionType
     {
-        From,
-        To
+        Send,
+        Receive
     }
     public class TransactionsItemViewModel
     {
@@ -51,6 +57,7 @@ namespace Verge.Mobile.ViewModels
         public string Date { get; set; }
         public string Address { get; set; }
         public string Amount { get; set; }
+        public string Category { get; set; }
 
     }
 

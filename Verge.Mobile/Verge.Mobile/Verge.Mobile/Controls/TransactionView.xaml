@@ -3,17 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:design="clr-namespace:Verge.Mobile;assembly=Verge.Mobile"
              xmlns:vm="clr-namespace:Verge.Mobile;assembly=Verge.Mobile"
+                xmlns:behaviors="clr-namespace:Verge.Mobile.Behaviors;assembly=Verge.Mobile"
              BindingContext="{x:Static design:ViewModelDesign.TransactionViewModel}"
                 xmlns:templates="clr-namespace:Verge.Mobile.DataTemplates;assembly=Verge.Mobile"
              x:Class="Verge.Mobile.Controls.TransactionView">
     <ContentView.Resources>
+        <behaviors:ListViewEventToCommandConverter x:Key="SelectedItemConverter" />
         <ResourceDictionary>
             <Style x:Key="LabelDate" TargetType="Label">
                 <Setter Property="TextColor" Value="{StaticResource PrimaryDark}" />
                 <Setter Property="HorizontalOptions" Value="Start" />
             </Style>
             <Style x:Key="LabelAmount" TargetType="Label">
-                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="FontSize" Value="Medium" />
                 <Setter Property="HorizontalOptions" Value="End" />
                 <Setter Property="HorizontalTextAlignment" Value="End" />
                 <Setter Property="VerticalOptions" Value="Center" />
@@ -24,9 +26,9 @@
                 <Setter Property="HorizontalOptions" Value="Start" />
                 <Setter Property="WidthRequest" Value="3" />
             </Style>
-            <DataTemplate  x:Key="DefaultTemplate">
+            <DataTemplate  x:Key="RecivedTemplate">
                 <ViewCell>
-                    <Grid  Margin="0,10,0,0"  >
+                    <Grid >
                         <Grid.RowDefinitions>  
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
@@ -37,15 +39,15 @@
                             <ColumnDefinition Width="2*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource LabelDate}"  Text="{Binding Date}" />
-                        <Label Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Style="{StaticResource LabelAmount}" Text="{Binding Amount}" />
+                        <Label Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" TextColor="Black" Style="{StaticResource LabelAmount}" Text="{Binding Amount}" />
                         <Label Grid.Row="1" Grid.Column="1" TextColor="{StaticResource VergePrimary1}" Grid.ColumnSpan="2" HorizontalOptions="Start" Text="{Binding Address}" />
-                        <BoxView Grid.RowSpan="2" Grid.Column="0" Color="Green"  MinimumWidthRequest="5" HorizontalOptions="Start"  WidthRequest="3" />
+                        <BoxView Grid.RowSpan="2" Grid.Column="0" Color="Green"  Style="{StaticResource BoxViewTransactionType}" />
                     </Grid>
                 </ViewCell>
             </DataTemplate>
-            <DataTemplate  x:Key="SelectedTemplate">
+            <DataTemplate  x:Key="SentTemplate">
                 <ViewCell>
-                    <Grid  Margin="0,10,0,0"  >
+                    <Grid RowSpacing="10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
@@ -56,7 +58,7 @@
                             <ColumnDefinition Width="2*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource LabelDate}"  Text="{Binding Date}" />
-                        <Label Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" TextColor="Red" Style="{StaticResource LabelAmount}" Text="{Binding Amount}" />
+                        <Label Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" TextColor="Red" Style="{StaticResource LabelAmount}" Text="{Binding Amount}" />
                         <Label Grid.Row="1" Grid.Column="1" TextColor="{StaticResource VergePrimary1}" Grid.ColumnSpan="2" HorizontalOptions="Start" Text="{Binding Address}" />
                         <BoxView Grid.RowSpan="2" Grid.Column="0" Color="Red"  Style="{StaticResource BoxViewTransactionType}" />
 
@@ -65,18 +67,22 @@
             </DataTemplate>
 
             <templates:ReportListDataTemplateSelector x:Key="EntityDataTemplateSelector" 
-                                              ValidTemplate="{StaticResource SelectedTemplate}" 
-                                              InvalidTemplate="{StaticResource DefaultTemplate}" >
+                                              ValidTemplate="{StaticResource RecivedTemplate}" 
+                                              InvalidTemplate="{StaticResource SentTemplate}" >
             </templates:ReportListDataTemplateSelector>
         </ResourceDictionary>
     </ContentView.Resources>
     <StackLayout >
-        <ListView x:Name="MenuItemsListView"  IsPullToRefreshEnabled="True"
+        <ListView x:Name="MenuItemsListView"  IsPullToRefreshEnabled="True" RowHeight="100" 
               RefreshCommand="{Binding ReloadCmd}"
               IsRefreshing="{Binding IsBusy}"
               ItemTemplate="{StaticResource EntityDataTemplateSelector}"
+              SelectedItem="{Binding SelectedItem}"
               ItemsSource="{Binding Items}">
-            
+            <ListView.Behaviors>
+                <behaviors:ListViewEventToCommandBehavior Command="{Binding SelectedItemCmd}" Converter="{StaticResource SelectedItemConverter}" />
+
+            </ListView.Behaviors>
         </ListView>
         <ActivityIndicator Grid.RowSpan="3"  IsRunning="{Binding IsBusy}" VerticalOptions="Center" IsVisible="{Binding IsBusy}"/>
        

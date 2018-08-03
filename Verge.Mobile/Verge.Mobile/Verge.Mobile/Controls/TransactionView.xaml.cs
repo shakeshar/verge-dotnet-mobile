@@ -21,9 +21,16 @@ namespace Verge.Mobile.Controls
                 return;
             }
 #endif
-            viewmodel = ViewModelLocator.Resolve<TransactionsViewModel>();
-            BindingContext = viewmodel;
+            try
+            {
+                viewmodel = ViewModelLocator.Resolve<TransactionsViewModel>();
+                BindingContext = viewmodel;
+                viewmodel.Load();
+            }
+            catch (Exception e)
+            {
 
+            }
         }
     }
 }

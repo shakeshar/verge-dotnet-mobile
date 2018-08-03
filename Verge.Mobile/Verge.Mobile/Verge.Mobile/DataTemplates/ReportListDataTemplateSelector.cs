@@ -16,9 +16,9 @@ namespace Verge.Mobile.DataTemplates
         {
            switch(((TransactionsItemViewModel)item).TransactionType)
             {
-                case TransactionType.From:
+                case TransactionType.Receive:
                     return ValidTemplate;
-                case TransactionType.To:
+                case TransactionType.Send:
                     return InvalidTemplate;
                 default:
                     return InvalidTemplate;

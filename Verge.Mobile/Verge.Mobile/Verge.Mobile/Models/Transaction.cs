@@ -18,10 +18,15 @@ namespace Verge.Mobile.Models
             client = ViewModelLocator.Resolve<IVergeClient>();
         }
 
-        public async Task Load(string account)
+        public async Task Load()
         {
-            var response = await client.ListTransactions(account);
+            var response = await client.ListTransactions("*");
             Transactions = response.Data.Result.ToList();
+        }
+
+        public void SetAccount(string account)
+        {
+            this.Account = account;
         }
     }
 
@@ -29,7 +34,8 @@ namespace Verge.Mobile.Models
     {
         IList<Core.Contract.AccountTransactionsResponse> Transactions { get; }
         string Account { get; }
-        Task Load(string account);
+        Task Load();
+        void SetAccount(string account);
     
     }
 }

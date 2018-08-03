@@ -14,15 +14,15 @@ namespace Verge.Mobile
 		public App ()
 		{
 			InitializeComponent();
+            //App.Current.MainPage = new RPCLoginPage();
+
             if (Device.RuntimePlatform == Device.UWP)
             {
-               
-               
                 LoadProperties();
-                
-                if (App.Current.MainPage == null) App.Current.MainPage = new RPCLoginPage();
+                if (App.Current.MainPage == null) 
                 InitNavigation();
             }
+
            
 		}
         private Task InitNavigation()

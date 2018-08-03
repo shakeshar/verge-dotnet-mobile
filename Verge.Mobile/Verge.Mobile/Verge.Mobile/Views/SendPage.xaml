@@ -13,21 +13,24 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Picker Grid.Row="0" Grid.Column="0" Title="Receiver" ItemsSource="{Binding Items}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding Contact}"></Picker>
-        <Button Grid.Row="0" Grid.Column="1" HeightRequest="10" Text="New"   Command="{Binding NewContactCmd}"></Button>
+
+        <Label Grid.Row="0" Grid.Column="0"   TextColor="{StaticResource PrimaryDark}" Text="{Binding Address}" ></Label>
+
+        <!--<Picker Grid.Row="0" Grid.Column="0" Title="Receiver" ItemsSource="{Binding Items}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding Contact, Mode=TwoWay}"></Picker>-->
+        <Button Grid.Row="0" Grid.Column="1" Text="New"   Command="{Binding NewContactCmd}"></Button>
 
         <StackLayout Grid.Row="1"  Grid.ColumnSpan="2">
-            <Label Text="{Binding Max}"></Label>
-            <Entry Text="{Binding Amount}" Keyboard="Numeric"></Entry>
-            <Label Text="Fee"></Label>
-            <Entry Text="{Binding Fee}" Keyboard="Numeric"></Entry>
+            <Label Text="{Binding Max}" TextColor="{StaticResource PrimaryDark}"  ></Label>
+            <Entry Text="{Binding Amount}" Placeholder="Amount" Keyboard="Numeric"></Entry>
+            <Label Text="Fee"  TextColor="{StaticResource PrimaryDark}"></Label>
+            <Entry Text="{Binding Fee}" Placeholder="Fee" Keyboard="Numeric"></Entry>
         </StackLayout>
 
         <StackLayout Grid.Row="2" VerticalOptions="Center" Grid.ColumnSpan="2">
-            <Label Text="Message"></Label>
-            <Editor Text="{Binding Message}"></Editor>
+            <Label Text="Message"  TextColor="{StaticResource PrimaryDark}"></Label>
+            <Editor Text="{Binding Message}" Placeholder="Message"></Editor>
         </StackLayout>
-        <Button VerticalOptions="End" Text="Send" Grid.Row="3" Grid.ColumnSpan="2" Command="{Binding SendCmd}"></Button>
+        <Button  Text="Send" Grid.Row="3" Grid.ColumnSpan="2" Command="{Binding SendCmd}"></Button>
        
     </Grid>
 </ContentPage>

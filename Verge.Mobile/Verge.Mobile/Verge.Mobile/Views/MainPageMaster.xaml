@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Verge.Mobile.Views.MainPageMaster"
              Title="Master">
-  <StackLayout>
+    <StackLayout  BackgroundColor="{StaticResource VergePrimary3}">
         <ListView x:Name="MenuItemsListView" BackgroundColor="{StaticResource  VergePrimary3}"
               SeparatorVisibility="None"
               HasUnevenRows="true" 
@@ -22,8 +22,8 @@
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell>
-            <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand">
-              <Label VerticalOptions="FillAndExpand" 
+                        <StackLayout  Padding="15,10" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource VergePrimary3}">
+                            <Label  VerticalOptions="FillAndExpand" TextColor="{StaticResource LightTextColor}"
                     VerticalTextAlignment="Center" 
                     Text="{Binding Title}" 
                     FontSize="24"/>

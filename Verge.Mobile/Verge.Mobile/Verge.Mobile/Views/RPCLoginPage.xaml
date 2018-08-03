@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:Verge.Mobile.Controls;assembly=Verge.Mobile"
+                xmlns:local="clr-namespace:Verge.Mobile;assembly=Verge.Mobile"
              x:Class="Verge.Mobile.Views.RPCLoginPage">
    
         <!--<Image Source="logo.png" Aspect="AspectFill" Opacity="0.3"  />-->
@@ -13,7 +14,7 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
-               <Image Source="verge_symbol.png" VerticalOptions="Start" Scale="0.7"     />
+            <Image Source="verge_symbol.png" VerticalOptions="Start" Scale="0.7"     />
             <StackLayout Grid.Row="1">                
                
 

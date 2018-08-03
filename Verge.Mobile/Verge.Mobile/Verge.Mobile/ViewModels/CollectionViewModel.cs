@@ -5,6 +5,7 @@ namespace Verge.Mobile.ViewModels
     public class CollectionViewModel<T> : BaseViewModel
     {
         public ObservableCollection<T> Items { get; set; }
+        public T SelectedItem { get; set; }
         public CollectionViewModel()
         {
             Items = new ObservableCollection<T>();

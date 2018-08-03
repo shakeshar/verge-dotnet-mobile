@@ -19,6 +19,7 @@ namespace Verge.Mobile.ViewModels
             GuestCmd = new Command(async () => await GuestLogin(), () => canStart);
           
         }
+       
         private async Task GuestLogin()
         {
             canStart = false;

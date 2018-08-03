@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:design="clr-namespace:Verge.Mobile;"
-             BindingContext="{x:Static design:ViewModelLocator.MonkeysViewModel}"
+             xmlns:design="clr-namespace:Verge.Mobile;assembly=Verge.Mobile"
+            BindingContext="{x:Static design:ViewModelDesign.TransactionViewModel}"
              x:Class="Verge.Mobile.Views.TransactionsPage">
 
     <Grid>
@@ -24,14 +24,14 @@
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Row="0" Grid.ColumnSpan="3" HorizontalOptions="Start" Text="{Binding Balance}" />
-                            <Label Grid.Row="1" Grid.Column="0" HorizontalOptions="Start" Text="{Binding From}" />
+                            <Label Grid.Row="0" Grid.ColumnSpan="3" HorizontalOptions="Start" Text="{Binding Status}" />
+                            <Label Grid.Row="1" Grid.Column="0" HorizontalOptions="Start" Text="{Binding Status}" />
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ActivityIndicator  IsRunning="{Binding IsBusy}" VerticalOptions="Center" IsVisible="{Binding IsBusy}"/>
-        <Button Text="Tet"></Button>
+        <!--<ActivityIndicator  IsRunning="{Binding IsBusy}" VerticalOptions="Center" IsVisible="{Binding IsBusy}"/>
+        <Button Text="Tet"></Button>-->
     </Grid>
 </ContentPage>

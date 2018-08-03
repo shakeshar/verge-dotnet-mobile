@@ -16,6 +16,11 @@ namespace Verge.Mobile.Controls
         public PaymentView ()
 		{
             InitializeComponent();
+#if (DESIGN)
+            {
+                return;
+            }
+#endif
             viewmodel = ViewModelLocator.Resolve<PaymentViewModel>();
             BindingContext = viewmodel;
         }

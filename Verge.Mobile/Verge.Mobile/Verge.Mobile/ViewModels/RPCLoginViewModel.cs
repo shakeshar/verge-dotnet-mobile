@@ -3,6 +3,7 @@ using System.Collections;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Verge.Core.Client;
+using Verge.Mobile.Models;
 using Verge.Mobile.Services;
 using Xamarin.Forms;
 
@@ -12,9 +13,9 @@ namespace Verge.Mobile.ViewModels
     public class RPCLoginViewModel : BaseViewModel
     {
       
-        private bool canStart = true;
+       
         private IRPCCredentials model;
-
+        IVergeClient status;
         #region Properties
         public ICommand LoginCmd { get; private set; }
         public ICommand GuestCmd { get; private set; }
@@ -41,16 +42,30 @@ namespace Verge.Mobile.ViewModels
         #endregion
         public RPCLoginViewModel()
         {
-            LoginCmd = new Command(async () => await Login(), () => canStart);
+            LoginCmd = new Command(async () => await Login(), () => CanStart);
             model = Storage.GetItem<RPCCredentials>(ConstantStrings.RPC_LOGIN_CREDENTIALS_KEY);
+
+            //fix
+            status = ViewModelLocator.Resolve<IVergeClient>();
+
         }
         private async Task Login()
         {
-            canStart = false;
+            status = ViewModelLocator.Resolve<IVergeClient>();
+            CanStart = false;
             IsBusy = true;
             ((Command)LoginCmd).ChangeCanExecute();
+            try
+            {
+                var response = await status.GetInfo();
+                await NavigationService.NavigateToAsync<MainViewModel>();
+            }
+            catch (Exception e)
+            {
+              await NavigationService.Display("Can't connect, check credentials");
+
+            }
             //App.Account = new Domain.Strat(Username, NBitcoin.Network.TestNet);
-            await NavigationService.NavigateToAsync<MainViewModel>();
             try
             {
                 //Application.Current.Properties[LOGIN_CREDENTIALS_PASSWORD] = Password;
@@ -60,7 +75,7 @@ namespace Verge.Mobile.ViewModels
             {
               await  NavigationService.Display(e.Message);
             }
-            canStart = true;
+            CanStart = true;
             IsBusy = false;
             ((Command)LoginCmd).ChangeCanExecute();
         }

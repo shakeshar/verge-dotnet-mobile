@@ -1,41 +1,84 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-              xmlns:design="clr-namespace:Verge.Mobile;assembly=Verge.Mobile"
-              BindingContext="{x:Static design:ViewModelLocator.TransactionViewModel}"
+             xmlns:design="clr-namespace:Verge.Mobile;assembly=Verge.Mobile"
+             xmlns:vm="clr-namespace:Verge.Mobile;assembly=Verge.Mobile"
+             BindingContext="{x:Static design:ViewModelDesign.TransactionViewModel}"
+                xmlns:templates="clr-namespace:Verge.Mobile.DataTemplates;assembly=Verge.Mobile"
              x:Class="Verge.Mobile.Controls.TransactionView">
-    <StackLayout>
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>           
-            <RowDefinition Height="Auto"></RowDefinition>
-        </Grid.RowDefinitions>-->
-        <ListView x:Name="MenuItemsListView"  VerticalOptions="Center"
-              SeparatorVisibility="Default"
-              HasUnevenRows="False"
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style x:Key="LabelDate" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource PrimaryDark}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+            </Style>
+            <Style x:Key="LabelAmount" TargetType="Label">
+                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="HorizontalTextAlignment" Value="End" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+            </Style>
+            <Style x:Key="BoxViewTransactionType" TargetType="BoxView">
+                <Setter Property="MinimumWidthRequest" Value="5" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="WidthRequest" Value="3" />
+            </Style>
+            <DataTemplate  x:Key="DefaultTemplate">
+                <ViewCell>
+                    <Grid  Margin="0,10,0,0"  >
+                        <Grid.RowDefinitions>  
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="4*"></ColumnDefinition> 
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource LabelDate}"  Text="{Binding Date}" />
+                        <Label Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Style="{StaticResource LabelAmount}" Text="{Binding Amount}" />
+                        <Label Grid.Row="1" Grid.Column="1" TextColor="{StaticResource VergePrimary1}" Grid.ColumnSpan="2" HorizontalOptions="Start" Text="{Binding Address}" />
+                        <BoxView Grid.RowSpan="2" Grid.Column="0" Color="Green"  MinimumWidthRequest="5" HorizontalOptions="Start"  WidthRequest="3" />
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate  x:Key="SelectedTemplate">
+                <ViewCell>
+                    <Grid  Margin="0,10,0,0"  >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="4*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource LabelDate}"  Text="{Binding Date}" />
+                        <Label Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" TextColor="Red" Style="{StaticResource LabelAmount}" Text="{Binding Amount}" />
+                        <Label Grid.Row="1" Grid.Column="1" TextColor="{StaticResource VergePrimary1}" Grid.ColumnSpan="2" HorizontalOptions="Start" Text="{Binding Address}" />
+                        <BoxView Grid.RowSpan="2" Grid.Column="0" Color="Red"  Style="{StaticResource BoxViewTransactionType}" />
+
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+
+            <templates:ReportListDataTemplateSelector x:Key="EntityDataTemplateSelector" 
+                                              ValidTemplate="{StaticResource SelectedTemplate}" 
+                                              InvalidTemplate="{StaticResource DefaultTemplate}" >
+            </templates:ReportListDataTemplateSelector>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <StackLayout >
+        <ListView x:Name="MenuItemsListView"  IsPullToRefreshEnabled="True"
+              RefreshCommand="{Binding ReloadCmd}"
+              IsRefreshing="{Binding IsBusy}"
+              ItemTemplate="{StaticResource EntityDataTemplateSelector}"
               ItemsSource="{Binding Items}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"></RowDefinition>
-                                <RowDefinition Height="*"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                                <ColumnDefinition Width="8*"></ColumnDefinition>
-                                <ColumnDefinition Width="2*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Row="0" Grid.Column="1"  HorizontalOptions="Start" Text="{Binding Date}" />
-                            <Label Grid.Row="0" Grid.Column="2" HorizontalOptions="Start" HorizontalTextAlignment="End" Text="{Binding Amount}" />
-                            <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="Start" Text="{Binding Address}" />
-                            <Label Grid.RowSpan="2" Grid.Column="0"  VerticalOptions="Center" Text="{Binding TransactionType}" />
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+            
         </ListView>
         <ActivityIndicator Grid.RowSpan="3"  IsRunning="{Binding IsBusy}" VerticalOptions="Center" IsVisible="{Binding IsBusy}"/>
-        <Button Grid.Row="1" Text="More"></Button>
+       
     </StackLayout>
 </ContentView>

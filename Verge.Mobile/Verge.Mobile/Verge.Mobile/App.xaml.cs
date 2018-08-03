@@ -16,7 +16,10 @@ namespace Verge.Mobile
 			InitializeComponent();
             if (Device.RuntimePlatform == Device.UWP)
             {
+               
+               
                 LoadProperties();
+                
                 if (App.Current.MainPage == null) App.Current.MainPage = new RPCLoginPage();
                 InitNavigation();
             }

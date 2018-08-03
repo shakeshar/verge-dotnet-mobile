@@ -2,22 +2,20 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Verge.Mobile.Views.LoginPage">
-    <Grid >
-        <!--<Image Source="logo.png" Aspect="AspectFill" Opacity="0.3"  />-->
-        <Grid Style="{StaticResource CenterContent}" >
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Image Source="stratis_logo.png" VerticalOptions="End" Margin="55"     />
-            <StackLayout Grid.Row="1">                 
-                <Entry Text="{Binding Username}" HorizontalTextAlignment="Center" IsPassword="False" Placeholder="Supersecret privatekey"></Entry>
-                <Button  Text="Login" Command="{Binding LoginCmd}"></Button>
-                <Button  Text="RPC Login" Command="{Binding RPCLoginPageCmd}"></Button>
-            </StackLayout>
-            <ActivityIndicator Grid.Row="1"  IsRunning="{Binding IsBusy}" VerticalOptions="Center" IsVisible="{Binding IsBusy}"/>
-        </Grid>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+   
+    
+    <StackLayout Style="{StaticResource CenterContent}" Grid.RowSpan="2" VerticalOptions="Center">                 
+        <Entry Text="{Binding Username}" HorizontalTextAlignment="Center" IsPassword="False" Placeholder="Supersecret privatekey"></Entry>
+        <Button  Text="RPC Login" Command="{Binding RPCLoginPageCmd}"></Button>
+        </StackLayout>
+        
+     <Image Source="verge-symbol" Scale=".5" ></Image>
+     <ActivityIndicator Grid.Row="1"  IsRunning="{Binding IsBusy}" VerticalOptions="Center" IsVisible="{Binding IsBusy}"/>
     </Grid>
 </ContentPage>

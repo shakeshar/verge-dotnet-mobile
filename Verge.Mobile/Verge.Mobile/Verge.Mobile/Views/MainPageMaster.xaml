@@ -4,20 +4,20 @@
              x:Class="Verge.Mobile.Views.MainPageMaster"
              Title="Master">
   <StackLayout>
-        <ListView x:Name="MenuItemsListView" BackgroundColor="{StaticResource  DarkBackgroundColor}"
+        <ListView x:Name="MenuItemsListView" BackgroundColor="{StaticResource  VergePrimary3}"
               SeparatorVisibility="None"
               HasUnevenRows="true" 
               ItemsSource="{Binding MenuItems}">
       <ListView.Header>
-        <Grid BackgroundColor="White">
+        <Grid BackgroundColor="{StaticResource VergePrimary3}">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
           </Grid.ColumnDefinitions>
           <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
           </Grid.RowDefinitions>
-           <Image  Source="stratis_logo.png"      />
-        </Grid>
+                    <Image Source="verge_symbol.png"></Image>
+                </Grid>
       </ListView.Header>
       <ListView.ItemTemplate>
         <DataTemplate>

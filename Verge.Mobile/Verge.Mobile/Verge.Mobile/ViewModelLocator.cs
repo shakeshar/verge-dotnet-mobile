@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Verge.Core.Client;
 using Verge.Mobile.Factories;
 using Verge.Mobile.Models;
@@ -55,10 +56,11 @@ namespace Verge.Mobile
             serviceProviderCollection.AddSingleton(typeof(IStorageService), typeof(StorageService));
             serviceProviderCollection.AddSingleton<IDictionary<string, object>>(cacheFactory);
             serviceProviderCollection.AddSingleton<INavigationService, NavigationService>();
-            serviceProviderCollection.AddSingleton<IDataStore<Contact>>(contactDataStore);
-            serviceProviderCollection.AddSingleton<IVergeClient>(vergeClientFunc);
+            serviceProviderCollection.AddSingleton<IDataStore<Contact>>(contactDataStore);         
             serviceProviderCollection.AddSingleton<IOverviewStatus, OverviewStatus>();
             serviceProviderCollection.AddSingleton<ITransaction, Transaction>();
+
+            serviceProviderCollection.AddTransient<IVergeClient>(vergeClientFunc);
             serviceProvider = serviceProviderCollection.BuildServiceProvider();
             SetTranslation();
         }
@@ -83,38 +85,50 @@ namespace Verge.Mobile
         {
             return serviceProvider.GetService(t);
         }
-        static ServiceReportListMockViewModel monkeysVM;
-        static OverviewStatus overviewStatus;
-        static TransactionViewModelMock transactionViewModel;
 
-        public static ServiceReportListMockViewModel MonkeysViewModel => monkeysVM ?? (monkeysVM = new ServiceReportListMockViewModel());
-        public static OverviewStatus OverviewStatus => overviewStatus ?? (overviewStatus = new OverviewStatus());
-        public static TransactionViewModelMock TransactionViewModel => transactionViewModel ?? (transactionViewModel = new  TransactionViewModelMock());
+        
+       
+
+
     }
-    public class TransactionViewModelMock : CollectionViewModel<TransactionViewModelItemMock>
+    public static class ViewModelDesign
     {
-
+     
+        private static TransactionViewModelMock monk;
+        public static TransactionViewModelMock TransactionViewModel => monk ?? (monk = new TransactionViewModelMock());
+        public static OverviewStatus OverviewStatus = new OverviewStatus();
+  
+    }
+    public class TransactionViewModelMock 
+    {
+        public ObservableCollection<TransactionsItemViewModel> Items { get; set; } = new ObservableCollection<TransactionsItemViewModel>();
         public TransactionViewModelMock()
         {
-            Items.Add(new TransactionViewModelItemMock()
+            Items.Add(new TransactionsItemViewModel()
             {
-                Balance = 10m,
-                From = "Temp"
+                Address = "adajölsdjöalsdjl",
+                Amount = "100 XVG",
+                Date = DateTime.Now.ToString(),
+                TransactionType = TransactionType.To
             });
-            Items.Add(new TransactionViewModelItemMock()
+            Items.Add(new TransactionsItemViewModel()
             {
-                Balance = 10m,
-                From = "Temp"
-            });
-            Items.Add(new TransactionViewModelItemMock()
+                Address = "adajölsdjöalsdjl",
+                Amount = "100 XVG",
+                Date = DateTime.Now.ToString(),
+                TransactionType = TransactionType.From
+            }); Items.Add(new TransactionsItemViewModel()
             {
-                Balance = 10m,
-                From = "Temp"
-            });
-            Items.Add(new TransactionViewModelItemMock()
+                Address = "adajölsdjöalsdjl",
+                Amount = "100 XVG",
+                Date = DateTime.Now.ToString(),
+                TransactionType = TransactionType.To
+            }); Items.Add(new TransactionsItemViewModel()
             {
-                Balance = 10m,
-                From = "Temp"
+                Address = "adajölsdjöalsdjl",
+                Amount = "100 XVG",
+                Date = DateTime.Now.ToString(),
+                TransactionType = TransactionType.From
             });
         }
     }
@@ -124,52 +138,5 @@ namespace Verge.Mobile
         public decimal Balance { get; set; }
 
     }
-    public class ServiceReportListMockViewModel : CollectionViewModel<object>
-    {
-        public ServiceReportListMockViewModel() : base()
-        {
-            string descrtiption = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation";
-    
-            Items.Add(new 
-            {
-                Description = descrtiption,
-                Id = 0,
-                IsRead = true,
-                RegTime = DateTimeOffset.UtcNow,
-                Status = "Mottaget"
-
-            });
-
-            Items.Add(new
-            {
-                Description = descrtiption,
-                Id = 0,
-                IsRead = true,
-                RegTime = DateTimeOffset.UtcNow,
-                Status = "Mottaget"
-
-            });
-
-            Items.Add(new
-            {
-                Description = descrtiption,
-                Id = 0,
-                IsRead = true,
-                RegTime = DateTimeOffset.UtcNow,
-                Status = "Mottaget"
-
-            });
-
-            Items.Add(new
-            {
-                Description = descrtiption,
-                Id = 0,
-                IsRead = true,
-                RegTime = DateTimeOffset.UtcNow,
-                Status = "Mottaget"
-
-            });
-
-        }
-    }
+   
 }

@@ -16,6 +16,11 @@ namespace Verge.Mobile.Controls
         public TransactionView()
         {
             InitializeComponent();
+#if (DESIGN)
+            {
+                return;
+            }
+#endif
             viewmodel = ViewModelLocator.Resolve<TransactionsViewModel>();
             BindingContext = viewmodel;
 

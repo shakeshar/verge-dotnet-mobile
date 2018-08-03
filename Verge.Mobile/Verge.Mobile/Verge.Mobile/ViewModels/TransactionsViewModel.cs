@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Verge.Mobile.Models;
 using Verge.Mobile.Services;
+using Xamarin.Forms;
 
 namespace Verge.Mobile.ViewModels
 {
     public class TransactionsViewModel : CollectionViewModel<TransactionsItemViewModel>
     {
-
-
+        
+        public ICommand ReloadCmd { get; private set; }
         ITransaction model;
         public TransactionsViewModel()
         {
             model = ViewModelLocator.Resolve<ITransaction>();
+            ReloadCmd = new Command(async () => await Load() );
             Load();
             
         }
@@ -23,6 +26,7 @@ namespace Verge.Mobile.ViewModels
         public async Task Load()
         {
             IsBusy = true;
+            
             await model.Load("main");
             foreach (var item in model.Transactions)
             {

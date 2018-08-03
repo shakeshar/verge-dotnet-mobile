@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Verge.Mobile.Controls.PaymentView">
       <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-            <Button Text="SEND" Command="{Binding SendCmd}"></Button>
-            <Button Text="RECEIVE" Command="{Binding ReceiveCmd}"></Button>
+            <Button Text="SEND" VerticalOptions="Center" Command="{Binding SendCmd}"></Button>
+            <Button Text="RECEIVE" VerticalOptions="Center" Command="{Binding ReceiveCmd}"></Button> 
       </StackLayout>
 </ContentView>

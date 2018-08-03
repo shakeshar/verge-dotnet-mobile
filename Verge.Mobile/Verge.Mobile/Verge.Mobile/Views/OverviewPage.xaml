@@ -2,16 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:controls="clr-namespace:Verge.Mobile.Controls;assembly=Verge.Mobile"
-             BindingContext="{x:Static design:ViewModelLocator.OverviewStatus}"
+         BindingContext="{x:Static design:ViewModelDesign.TransactionViewModel}"
                xmlns:design="clr-namespace:Verge.Mobile;assembly=Verge.Mobile"
+   
              x:Class="Verge.Mobile.Views.OverviewPage">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0" BackgroundColor="LightBlue">
+   
+    <StackLayout Spacing="1">
+     
+        <Grid  VerticalOptions="Start" Grid.Row="0" BackgroundColor="{StaticResource VergePrimary3}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -21,12 +19,12 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="0"  Text="Balance"></Label>
-            <Label Grid.Row="0" Grid.Column="1"  Text="{Binding Balance}"></Label>
-            <Label Grid.Row="1" Grid.Column="0"  Text="Unconfirmed"></Label>
-            <Label Grid.Row="1" Grid.Column="1"  Text="{Binding Unconfirmed}"></Label>
+            <Label FontSize="Large" Grid.Row="0" Grid.Column="0"  Text="Balance"></Label>
+            <Label FontSize="Large" Grid.Row="0" Grid.Column="1"  Text="{Binding Balance}"></Label>
+            <Label FontSize="Large" Grid.Row="1" Grid.Column="0"  Text="Unconfirmed"></Label>
+            <Label FontSize="Large" Grid.Row="1" Grid.Column="1"  Text="{Binding Unconfirmed}"></Label>
         </Grid>
-        <controls:TransactionView Grid.Row="1" BackgroundColor="DarkBlue"></controls:TransactionView>
-        <controls:PaymentView     Grid.Row="2" BackgroundColor="Blue"></controls:PaymentView>
-    </Grid>
+        <controls:TransactionView    Grid.Row="1" BackgroundColor="{StaticResource LightTextColor}"></controls:TransactionView>
+        <controls:PaymentView     Grid.Row="2" BackgroundColor="{StaticResource LightTextColor}"></controls:PaymentView>
+    </StackLayout >
 </ContentPage>

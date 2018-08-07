@@ -28,17 +28,19 @@ namespace Verge.Mobile.ViewModels
         public async Task Load()
         {
             IsBusy = true;
-
+            var balance = ViewModelLocator.Resolve<IOverviewStatus>();
+            await balance.Load();
             await model.Load();
             Items.Clear();
             foreach (var item in model.Transactions.OrderByDescending(px => px.timereceived))
             {
                 if (item.category == null) continue;
+                double total = item.amount + item.fee;
                 Items.Add(new TransactionsItemViewModel()
                 {
                     TransactionType = (item.category.Length == 4 ? TransactionType.Send : TransactionType.Receive),
                     Address = item.address,
-                    Amount = $"{Convert.ToDecimal(item.amount)} XVG",
+                    Amount = $"{Convert.ToDecimal(total)} XVG",
                     Category = item.category,
                     Date = DateTimeOffset.FromUnixTimeSeconds(item.timereceived).ToString()
                 });

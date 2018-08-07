@@ -39,6 +39,7 @@ namespace Verge.Mobile.ViewModels
             SendCmd = new Command(async () => await Send(), () => CanStart);
            
         }
+       
         public override async Task InitializeAsync(object navigationData)
         {
             if (navigationData is TransactionsItemViewModel)
@@ -64,14 +65,13 @@ namespace Verge.Mobile.ViewModels
 
             ((Command)SendCmd).ChangeCanExecute();
             //FIX
-            await client.WalletPassphrase("supersecret");
+          var result =   await client.WalletPassphrase("supersecret");
             var response = await client.SendToAddress(Address, Amount, message, message);
 
             
             if (response.Response.IsSuccessStatusCode)
             {
                 await NavigationService.Display("Success!");
-                   
             }
             CanStart = true;
             IsBusy = false;

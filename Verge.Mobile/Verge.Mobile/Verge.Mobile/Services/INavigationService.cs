@@ -113,7 +113,7 @@ namespace Verge.Mobile.Services
 
 
 
-            if (page is LoginPage)
+            if (page is RPCLoginPage)
             {
                 Application.Current.MainPage = page;
             }

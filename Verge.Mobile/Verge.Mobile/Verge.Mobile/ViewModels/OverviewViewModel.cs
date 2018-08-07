@@ -31,8 +31,16 @@ namespace Verge.Mobile.ViewModels
         {
             LoginCmd = new Command(async () => await Login(), () => CanStart);
             model = ViewModelLocator.Resolve<IOverviewStatus>();
-           
+            model.OnReload += Model_OnReload;
         }
+
+        private void Model_OnReload(object sender, EventArgs e)
+        {
+            base.OnPropertyChanged(nameof(Balance));
+            base.OnPropertyChanged(nameof(Unconfirmed));
+
+        }
+
         public override async Task OnApperaing()
         {
             IsBusy = true;

@@ -20,7 +20,7 @@ namespace Verge.Mobile.Models
 
         public async Task Load()
         {
-            var response = await client.ListTransactions("*");
+            var response = await client.ListTransactions("*", 30);
             Transactions = response.Data.Result.ToList();
         }
 

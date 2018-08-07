@@ -11,6 +11,14 @@ namespace Verge.Mobile.Models
         public decimal Balance { get; private set; }
         public decimal Unconfirmed { get; private set; }
         IVergeClient client;
+
+        public event EventHandler<EventArgs> OnReload;
+        
+        protected void RaiseOnReload(EventArgs e)
+        {
+            OnReload?.Invoke(this, e);
+        }
+
         public OverviewStatus()
         {
             client = ViewModelLocator.Resolve<IVergeClient>();
@@ -20,13 +28,18 @@ namespace Verge.Mobile.Models
         {
             var response = await client.GetBalance();
             Balance = response.Data.Result;
+            RaiseOnReload(new EventArgs());
         }
     }
 
-    public interface IOverviewStatus
+    public interface IOverviewStatus : IReload
     {
         decimal Balance { get;  }
         decimal Unconfirmed { get;  }
         Task Load();
+    }
+    public interface IReload
+    {
+        event EventHandler<EventArgs> OnReload;
     }
 }

@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:controls="clr-namespace:Verge.Mobile.Controls;assembly=Verge.Mobile"
-         BindingContext="{x:Static design:ViewModelDesign.TransactionViewModel}"
+      BindingContext="{x:Static design:ViewModelDesign.TransactionViewModel}"
                xmlns:design="clr-namespace:Verge.Mobile;assembly=Verge.Mobile"
    
              x:Class="Verge.Mobile.Views.OverviewPage">

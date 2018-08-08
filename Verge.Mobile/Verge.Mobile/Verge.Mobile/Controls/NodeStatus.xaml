@@ -2,74 +2,38 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Verge.Mobile.Controls.NodeStatus">
-    <ContentView.Resources>
-        <Style TargetType="Label">
-            <Setter Property="HorizontalOptions" Value="Center"></Setter>
-            <Setter Property="VerticalOptions" Value="Center"></Setter>
-        </Style>
-    </ContentView.Resources>
+    
     <ContentView.Content>
-        
-        
-        <StackLayout>
-            <Grid RowSpacing="10" BackgroundColor="Blue">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                
-                <Image BackgroundColor="Green" HeightRequest="100"   Grid.Row="0" Source="verge_symbol.png" Scale="1"     />
-                <Label Grid.Row="1" Grid.Column="0"    Text="Iota" />
-                <Label Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" TextColor="Red"  Text="Test 3" />
-                <Label Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="2"  Text="Test 5" />
-            </Grid>
-            <Grid RowSpacing="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="2*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Image Grid.Column="0" Grid.Row="0" BackgroundColor="Red" Source="verge_symbol.png" Grid.ColumnSpan="2"  Scale="1"     />
-                <Label Grid.Row="1" Grid.Column="1"   Text="Local" />
-                <Label Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" TextColor="Red"  Text="Test" />
-                <Label Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="2"  Text="Test" />
-            </Grid>
-            
-        </StackLayout>
-        <!--<ListView IsPullToRefreshEnabled="True" RowHeight="100" 
+       
+        <ListView IsPullToRefreshEnabled="True" RowHeight="100" 
               ItemsSource="{Binding Items}">
             <ListView.ItemTemplate>
                 <DataTemplate >
-                    <ViewCell> 
-                        <Grid RowSpacing="10">
+                    <ViewCell>
+                        <Grid BackgroundColor="{StaticResource VergePrimary4}">
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="*"></RowDefinition>
-                                <RowDefinition Height="*"></RowDefinition>
+                                <!--<RowDefinition Height="*"></RowDefinition>-->
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                <ColumnDefinition Width="4*"></ColumnDefinition>
-                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Row="0" Grid.Column="1"   Text="{Binding Name}" />
-                            <Label Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" TextColor="Red" Style="{StaticResource LabelAmount}" Text="{Binding Amount}" />
-                            <Label Grid.Row="1" Grid.Column="1" TextColor="{StaticResource VergePrimary1}" Grid.ColumnSpan="2" HorizontalOptions="Start" Text="{Binding Address}" />
-                            <BoxView Grid.RowSpan="2" Grid.Column="0" Color="Red"  Style="{StaticResource BoxViewTransactionType}" />
 
+                            <StackLayout Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="{StaticResource VergePrimary4}">
+                                <Label  Grid.Row="1" Grid.Column="0"    Text="{Binding Name}"  FontSize="Large" />
+                                <Label Grid.Row="0"  Grid.Column="0" Grid.ColumnSpan="2" Text="Blocks 2 408 077 / 2 408 077" />
+                                <Label Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2" Text="IP: nany6b4twcyoqexk.onion" />
+                                <Label Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2" Text="Url: nany6b4twcyoqexk.onion" />
+                                <Label Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2" Text="LastSeen: nany6b4twcyoqexk.onion" />
+                            </StackLayout>
+                            <Image HeightRequest="100" Aspect="AspectFit"   Grid.Row="0" Source="verge_symbol.png" Scale="1"     />
                         </Grid>
                     </ViewCell>
                 </DataTemplate>                
             </ListView.ItemTemplate>           
-        </ListView>-->
+        </ListView>
        
     </ContentView.Content>
 </ContentView>

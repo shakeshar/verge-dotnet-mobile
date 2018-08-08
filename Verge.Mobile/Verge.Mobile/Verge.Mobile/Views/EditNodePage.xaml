@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Verge.Mobile.Views.EditNodePage">
+        <ScrollView>
+            <Grid Style="{StaticResource CenterContent}" >
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Image Source="verge_symbol.png" VerticalOptions="Start" Scale="0.7"     />
+            <StackLayout Grid.Row="1">
+                <Label Text="Name" HorizontalTextAlignment="Center"></Label>
+                <Entry Text="{Binding Username}" HorizontalTextAlignment="Center" Placeholder="username"></Entry>
+
+                <Label Text="Username" HorizontalTextAlignment="Center"></Label>
+                    <Entry Text="{Binding Username}" HorizontalTextAlignment="Center" Placeholder="username"></Entry>
+
+                    <Label Text="Password" HorizontalTextAlignment="Center"></Label>
+                    <Entry Text="{Binding Password}" HorizontalTextAlignment="Center" IsPassword="True" Placeholder="supersecret"></Entry>
+
+                    <Label Text="Url" HorizontalTextAlignment="Center"></Label>
+                    <Entry Text="{Binding Url}" HorizontalTextAlignment="Center" Placeholder="http://www.home.se"></Entry>
+
+                    <Label Text="Port" HorizontalTextAlignment="Center"></Label>
+                    <Entry Text="{Binding Port}" HorizontalTextAlignment="Center" Keyboard="Numeric" Placeholder="20102"></Entry>
+
+                </StackLayout>
+                <Button Grid.Row="3"  HorizontalOptions="Fill" VerticalOptions="Start"   Text="Login" Command="{Binding LoginCmd}"></Button>
+
+                <ActivityIndicator Grid.Row="2"  IsRunning="{Binding IsBusy}" VerticalOptions="Center" IsVisible="{Binding IsBusy}"/>
+
+            </Grid>
+        </ScrollView>
+   
+</ContentPage>

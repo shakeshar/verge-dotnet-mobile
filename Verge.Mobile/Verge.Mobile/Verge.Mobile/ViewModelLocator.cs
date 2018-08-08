@@ -21,6 +21,7 @@ namespace Verge.Mobile
             
             #region ViewModels
             serviceProviderCollection.AddSingleton<PaymentViewModel>();
+            serviceProviderCollection.AddSingleton<NodeStatusViewModel>();            
             serviceProviderCollection.AddSingleton<OverviewViewModel>();
             serviceProviderCollection.AddSingleton<TransactionsViewModel>();
             serviceProviderCollection.AddSingleton<LoginViewModel>();
@@ -36,6 +37,7 @@ namespace Verge.Mobile
             serviceProviderCollection.AddSingleton<INavigationService, NavigationService>();
             serviceProviderCollection.AddSingleton<IOverviewStatus, OverviewStatus>();
             serviceProviderCollection.AddSingleton<ITransaction, Transaction>();
+
 
             serviceProviderCollection.AddTransient<IVergeClient>(vergeClientFunc);
             serviceProvider = serviceProviderCollection.BuildServiceProvider();
@@ -68,30 +70,7 @@ namespace Verge.Mobile
 
 
     }
-    public static class NodeStatusHelper
-    {
-        public static ObservableCollection<NodeStatusItemViewModel> Items { get; set; }
-
-        static NodeStatusHelper()
-        {
-             Items = new ObservableCollection<NodeStatusItemViewModel>();
-            Items.Add(new NodeStatusItemViewModel()
-            {
-                Name = $"Test 1",
-                Url = $"http://node1.home.se"
-            });
-            Items.Add(new NodeStatusItemViewModel()
-            {
-                Name = $"Test 2",
-                Url = $"http://node2.home.se"
-            });
-            Items.Add(new NodeStatusItemViewModel()
-            {
-                Name = $"Test 3",
-                Url = $"http://node3.home.se"
-            });
-        }
-    }
+   
     public static class ViewModelDesign
     {
         private static NodeStatusViewModel nodeStatus;
@@ -142,20 +121,7 @@ namespace Verge.Mobile
 
     }
 
-    public class NodeStatusViewModel
-    {
-        public  ObservableCollection<NodeStatusItemViewModel> Items { get; set; } 
-        public NodeStatusViewModel()
-        {
-            Items = NodeStatusHelper.Items;
-            
-        }
-
-    }
-    public class NodeStatusItemViewModel
-    {
-        public string Name { get; set; }
-        public string Url { get; set; }
-    }
+    
+   
    
 }

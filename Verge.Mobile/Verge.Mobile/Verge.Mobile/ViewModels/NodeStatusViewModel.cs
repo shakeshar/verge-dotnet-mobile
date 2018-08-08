@@ -10,16 +10,14 @@ using Xamarin.Forms;
 namespace Verge.Mobile.ViewModels
 {
 
-    public class OverviewViewModel : BaseViewModel
+    public class NodeStatusViewModel : CollectionViewModel<NodeStatusItemViewModel>
     {
        
         private IOverviewStatus model;
         
         #region Properties
         public ICommand LoginCmd { get; private set; }
-        public ICommand AddNodeCmd { get; private set; }
-
-
+        
         public string Balance
         {
             get { return $"{model?.Balance} XVG"; }
@@ -29,9 +27,8 @@ namespace Verge.Mobile.ViewModels
             get { return $"{model?.Unconfirmed} XVG"; }
         }
         #endregion
-        public OverviewViewModel()
+        public NodeStatusViewModel()
         {
-            AddNodeCmd  = new Command(async () => await NavigationService.NavigateToAsync<)
             LoginCmd = new Command(async () => await Login(), () => CanStart);
             model = ViewModelLocator.Resolve<IOverviewStatus>();
             model.OnReload += Model_OnReload;
@@ -60,8 +57,7 @@ namespace Verge.Mobile.ViewModels
             await NavigationService.NavigateToAsync<MainViewModel>();
             try
             {
-                //Application.Current.Properties[LOGIN_CREDENTIALS_PASSWORD] = Password;
-                //Application.Current.Properties[LOGIN_CREDENTIALS_USERNAME] = Username;
+                
             }
             catch (Exception e)
             {
@@ -72,5 +68,28 @@ namespace Verge.Mobile.ViewModels
             ((Command)LoginCmd).ChangeCanExecute();
         }
     }
-   
+    public class NodeStatusItemViewModel : BaseViewModel
+    {
+        #region Fields
+        private string name;
+        private string url;
+        private string ip;
+        private string lastSeen;
+        private string blocks;
+        #endregion
+
+        #region Properties
+        public string Name { get { return name; } set { name = value; OnPropertyChanged(); } } 
+        public string Url { get { return url; } set { url = value; OnPropertyChanged(); } }
+        public string IP { get { return ip; } set { ip = value; OnPropertyChanged(); } }
+        public string LastSeen { get { return lastSeen; } set { lastSeen = value; OnPropertyChanged(); } }
+        public string Blocks { get { return blocks; } set { blocks = value; OnPropertyChanged(); } }
+        #endregion
+        public NodeStatusItemViewModel()
+        {
+
+        }
+
+    }
+
 }

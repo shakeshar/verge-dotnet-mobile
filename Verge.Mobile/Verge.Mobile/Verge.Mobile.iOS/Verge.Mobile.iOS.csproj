@@ -176,4 +176,7 @@
   <ItemGroup>
     <BundleResource Include="Resources\verge_symbol.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\error.png" />
+  </ItemGroup>
 </Project>

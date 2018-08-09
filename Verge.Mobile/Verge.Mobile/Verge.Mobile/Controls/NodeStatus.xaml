@@ -24,17 +24,21 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-
                             <StackLayout Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="{StaticResource VergePrimary4}">
                                 <Label  Text="{Binding Name}"  FontSize="Large" />
-                                <Label  Text="{Binding Blocks}" />
                                 <Label  Text="{Binding IP}" />
                                 <Label  Text="{Binding Url}" />
-                                <Label  Text="{Binding LastSeen}" />
-                                <Label  Text="{Binding Status}" />
+                                <Label  Text="{Binding LastSeen, StringFormat='LastSeen: {0}'}" />
+                                <!--<Label  Text="{Binding Status}" />-->
+                                <Label  Text="{Binding Blocks, StringFormat='Blocks: {0}'}" />
+
+                                <Label  Text="{Binding Connections, StringFormat='Connections: {0}'}"  />
                             </StackLayout>
                             <Image HeightRequest="100" Aspect="AspectFit"   Grid.Row="0" Source="verge_symbol.png" Scale="1"     />
+                            <Image Source="error.png" Grid.Column="2" Scale="0.2" IsVisible="{Binding IsOffline}"></Image>
+
                         </Grid>
                     </ViewCell>
                 </DataTemplate>                

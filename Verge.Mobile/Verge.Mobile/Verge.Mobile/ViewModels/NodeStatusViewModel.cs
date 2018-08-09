@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Verge.Core.Client;
+using Verge.Core.Resource.BlockExplorer;
 using Verge.Mobile.Models;
 using Verge.Mobile.Services;
 using Xamarin.Forms;
@@ -86,6 +88,8 @@ namespace Verge.Mobile.ViewModels
         private string lastSeen;
         private string blocks;
         private string status;
+        private string connections;
+        private bool isOffline;
         #endregion
 
         #region Properties
@@ -96,14 +100,23 @@ namespace Verge.Mobile.ViewModels
         public string Blocks { get { return blocks; } set { blocks = value; OnPropertyChanged(); } }
         public string Id { get; set; }
         public string Status { get { return status; } set { status = value; OnPropertyChanged(); } }
+        public string Connections { get { return connections; } set { connections = value; OnPropertyChanged(); } }
+        public bool IsOffline { get { return isOffline; } set { isOffline = value; OnPropertyChanged(); } }
         #endregion
         private readonly IVergeClient client;
         public RPCCredentials Cred { get; }
+        IBlockExplorerResource resource;
+
+        string blockRe;
         public NodeStatusItemViewModel(IVergeClient client, RPCCredentials cred)
         {
+            HttpClient client2 = new HttpClient();
+            resource = new BlockExplorerResource(client2, "https://verge-blockchain.info/");
+       
             this.Cred = cred;
             this.client = client;
             this.Url = Cred.Url;
+            LastSeen = DateTimeOffset.MinValue.ToString();
            
         }
         public async Task Load()
@@ -112,17 +125,22 @@ namespace Verge.Mobile.ViewModels
             {
                 try
                 {
-                    
+                    if (blockRe == null)
+                    {
+                        //var blocks = await this.resource.GetBlockCount();
+                    }
                     var result = await this.client.GetInfo();
                     LastSeen = DateTimeOffset.Now.ToString();
-
+                    Connections = result.Data.Result.connections.ToString();
                     IP = result.Data.Result.ip;
                     Blocks = result.Data.Result.blocks.ToString();
-                    Status = ":)";
+                    //Status = ":)";
+                    IsOffline = false;
                 }
                 catch (Exception e)
                 {
-                    Status = ":(";
+                    //Status = ":(";
+                    IsOffline = true;
                 }
                 finally
                 {

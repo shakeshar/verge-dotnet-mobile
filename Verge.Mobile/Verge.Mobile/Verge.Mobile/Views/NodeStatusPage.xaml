@@ -2,14 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:controls="clr-namespace:Verge.Mobile.Controls;assembly=Verge.Mobile"
-      BindingContext="{x:Static design:ViewModelDesign.TransactionViewModel}"
-               xmlns:design="clr-namespace:Verge.Mobile;assembly=Verge.Mobile"
-   
-             x:Class="Verge.Mobile.Views.OverviewPage">
-   
+             x:Class="Verge.Mobile.Views.NodeStatusPage">
     <StackLayout Spacing="1">
-     
-       <Grid  VerticalOptions="Start" Grid.Row="0" BackgroundColor="{StaticResource VergePrimary3}">
+
+        <!--<Grid  VerticalOptions="Start" Grid.Row="0" BackgroundColor="{StaticResource VergePrimary3}">
             <Grid.Resources>
                 <Style x:Key="LabelSize" TargetType="Label">
                     <Setter Property="FontSize" Value="Medium"></Setter>
@@ -30,8 +26,8 @@
             <Label Style="{StaticResource LabelSize}" Grid.Row="1" Grid.Column="1"  Text="{Binding Unconfirmed}"></Label>
         </Grid>
         <controls:TransactionView Grid.Row="1" BackgroundColor="{StaticResource LightTextColor}"></controls:TransactionView>
-        <controls:PaymentView     Grid.Row="2" BackgroundColor="{StaticResource LightTextColor}"></controls:PaymentView>
-        <!--<controls:NodeStatus      BackgroundColor="{StaticResource LightTextColor}"></controls:NodeStatus>-->
-        <!--<Button Command="{Binding AddNodeCmd}" Text="Add"></Button>-->
+        <controls:PaymentView     Grid.Row="2" BackgroundColor="{StaticResource LightTextColor}"></controls:PaymentView>-->
+        <controls:NodeStatus      BackgroundColor="{StaticResource LightTextColor}"></controls:NodeStatus>
+        <Button Command="{Binding SaveCmd}" Text="Add"></Button>
     </StackLayout >
 </ContentPage>

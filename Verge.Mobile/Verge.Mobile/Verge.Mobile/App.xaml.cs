@@ -5,13 +5,15 @@ using Xamarin.Forms.Xaml;
 using Verge.Mobile.Services;
 using System.Threading.Tasks;
 using System.Linq;
+using Verge.Mobile.ViewModels;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace Verge.Mobile
 {
 	public partial class App : Application
 	{
-		public App ()
+        public  RPCCredentials Cred;
+        public App ()
 		{
 			InitializeComponent();
             //App.Current.MainPage = new RPCLoginPage();

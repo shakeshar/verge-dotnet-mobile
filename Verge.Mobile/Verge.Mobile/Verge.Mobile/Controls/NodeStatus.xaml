@@ -1,11 +1,16 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:behaviors="clr-namespace:Verge.Mobile.Behaviors;assembly=Verge.Mobile"
              x:Class="Verge.Mobile.Controls.NodeStatus">
-    
+
+    <ContentView.Resources>
+        <behaviors:ListViewEventToCommandConverter x:Key="SelectedItemConverter" />
+    </ContentView.Resources>
     <ContentView.Content>
        
-        <ListView IsPullToRefreshEnabled="True" RowHeight="100" 
+        <ListView IsPullToRefreshEnabled="True" RowHeight="200" 
+                  SelectedItem="{Binding SelectedItem}"
               ItemsSource="{Binding Items}">
             <ListView.ItemTemplate>
                 <DataTemplate >
@@ -22,17 +27,21 @@
                             </Grid.ColumnDefinitions>
 
                             <StackLayout Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="{StaticResource VergePrimary4}">
-                                <Label  Grid.Row="1" Grid.Column="0"    Text="{Binding Name}"  FontSize="Large" />
-                                <Label Grid.Row="0"  Grid.Column="0" Grid.ColumnSpan="2" Text="Blocks 2 408 077 / 2 408 077" />
-                                <Label Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2" Text="IP: nany6b4twcyoqexk.onion" />
-                                <Label Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2" Text="Url: nany6b4twcyoqexk.onion" />
-                                <Label Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2" Text="LastSeen: nany6b4twcyoqexk.onion" />
+                                <Label  Text="{Binding Name}"  FontSize="Large" />
+                                <Label  Text="{Binding Blocks}" />
+                                <Label  Text="{Binding IP}" />
+                                <Label  Text="{Binding Url}" />
+                                <Label  Text="{Binding LastSeen}" />
                             </StackLayout>
                             <Image HeightRequest="100" Aspect="AspectFit"   Grid.Row="0" Source="verge_symbol.png" Scale="1"     />
                         </Grid>
                     </ViewCell>
                 </DataTemplate>                
-            </ListView.ItemTemplate>           
+            </ListView.ItemTemplate>
+            <ListView.Behaviors>
+                <behaviors:ListViewEventToCommandBehavior Command="{Binding SelectedItemCmd}" Converter="{StaticResource SelectedItemConverter}" />
+
+            </ListView.Behaviors>
         </ListView>
        
     </ContentView.Content>

@@ -12,25 +12,27 @@
                 </Grid.RowDefinitions>
                 <Image Source="verge_symbol.png" VerticalOptions="Start" Scale="0.7"     />
             <StackLayout Grid.Row="1">
-                <Label Text="Name" HorizontalTextAlignment="Center"></Label>
-                <Entry Text="{Binding Username}" HorizontalTextAlignment="Center" Placeholder="username"></Entry>
+                <!--<Label Text="Name" HorizontalTextAlignment="Center"></Label>-->
+                <!--<Entry Text="{Binding Item.Username}" HorizontalTextAlignment="Center" Placeholder="username"></Entry>-->
 
                 <Label Text="Username" HorizontalTextAlignment="Center"></Label>
-                    <Entry Text="{Binding Username}" HorizontalTextAlignment="Center" Placeholder="username"></Entry>
+                <Entry Text="{Binding Item.Username}" HorizontalTextAlignment="Center" Placeholder="username"></Entry>
 
                     <Label Text="Password" HorizontalTextAlignment="Center"></Label>
-                    <Entry Text="{Binding Password}" HorizontalTextAlignment="Center" IsPassword="True" Placeholder="supersecret"></Entry>
+                <Entry Text="{Binding Item.Password}" HorizontalTextAlignment="Center" IsPassword="True" Placeholder="supersecret"></Entry>
 
                     <Label Text="Url" HorizontalTextAlignment="Center"></Label>
-                    <Entry Text="{Binding Url}" HorizontalTextAlignment="Center" Placeholder="http://www.home.se"></Entry>
+                <Entry Text="{Binding Item.Url}" HorizontalTextAlignment="Center" Placeholder="http://www.home.se"></Entry>
 
                     <Label Text="Port" HorizontalTextAlignment="Center"></Label>
-                    <Entry Text="{Binding Port}" HorizontalTextAlignment="Center" Keyboard="Numeric" Placeholder="20102"></Entry>
+                <Entry Text="{Binding Item.Port}" HorizontalTextAlignment="Center" Keyboard="Numeric" Placeholder="20102"></Entry>
 
+                <Button   HorizontalOptions="Fill" VerticalOptions="Start"   Text="Save" Command="{Binding SaveCmd}"></Button>
+                <Button   HorizontalOptions="Fill" VerticalOptions="Start"   Text="Remove" Command="{Binding RemoveCmd}"></Button>
                 </StackLayout>
-                <Button Grid.Row="3"  HorizontalOptions="Fill" VerticalOptions="Start"   Text="Login" Command="{Binding LoginCmd}"></Button>
+                
 
-                <ActivityIndicator Grid.Row="2"  IsRunning="{Binding IsBusy}" VerticalOptions="Center" IsVisible="{Binding IsBusy}"/>
+            <ActivityIndicator Grid.Row="2"  IsRunning="{Binding IsBusy}" VerticalOptions="Center" IsVisible="{Binding IsBusy}"/>
 
             </Grid>
         </ScrollView>

@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace Verge.Mobile.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class EditNodePage : ContentPage
+	public partial class NodeStatusPage : ContentPage
 	{
-		public EditNodePage()
+		public NodeStatusPage ()
 		{
 			InitializeComponent ();
 		}

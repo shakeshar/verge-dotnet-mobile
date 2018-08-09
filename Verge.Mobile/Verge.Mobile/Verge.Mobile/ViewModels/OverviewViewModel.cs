@@ -31,7 +31,7 @@ namespace Verge.Mobile.ViewModels
         #endregion
         public OverviewViewModel()
         {
-            AddNodeCmd  = new Command(async () => await NavigationService.NavigateToAsync<)
+            AddNodeCmd = new Command(async () => await NavigationService.NavigateToAsync<EditNodeViewModel>());
             LoginCmd = new Command(async () => await Login(), () => CanStart);
             model = ViewModelLocator.Resolve<IOverviewStatus>();
             model.OnReload += Model_OnReload;

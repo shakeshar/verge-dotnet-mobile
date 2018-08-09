@@ -21,7 +21,9 @@ namespace Verge.Mobile
             
             #region ViewModels
             serviceProviderCollection.AddSingleton<PaymentViewModel>();
-            serviceProviderCollection.AddSingleton<NodeStatusViewModel>();            
+            serviceProviderCollection.AddSingleton<NodeStatusViewModel>();
+          
+         
             serviceProviderCollection.AddSingleton<OverviewViewModel>();
             serviceProviderCollection.AddSingleton<TransactionsViewModel>();
             serviceProviderCollection.AddSingleton<LoginViewModel>();
@@ -29,9 +31,10 @@ namespace Verge.Mobile
             serviceProviderCollection.AddSingleton<NewContactViewModel>();
             serviceProviderCollection.AddSingleton<RPCLoginViewModel>();
             serviceProviderCollection.AddTransient<SendViewModel>();
+            serviceProviderCollection.AddTransient<EditNodeViewModel>();
             #endregion
-            
-            
+
+
             serviceProviderCollection.AddSingleton(typeof(IStorageService), typeof(StorageService));
             serviceProviderCollection.AddSingleton<IDictionary<string, object>>(cacheFactory);
             serviceProviderCollection.AddSingleton<INavigationService, NavigationService>();
@@ -59,6 +62,7 @@ namespace Verge.Mobile
         public static T Resolve<T>()
         {
             return serviceProvider.GetService<T>();
+            
         }
         public static object Resolve(Type t)
         {

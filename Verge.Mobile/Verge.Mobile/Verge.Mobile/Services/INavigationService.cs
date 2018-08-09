@@ -164,12 +164,15 @@ namespace Verge.Mobile.Services
                 throw new Exception($"Cannot locate page type for {viewModelType}");
             }
 
-            Page page = Activator.CreateInstance(pageType) as Page;
-            var x = ViewModelLocator.Resolve(viewModelType);
-            if (x == null) throw new Exception("ViewModel not configured");
-            
-            page.BindingContext = x;
+            Page page;
+            page = Activator.CreateInstance(pageType) as Page;
 
+            var x = ViewModelLocator.Resolve(viewModelType);
+
+            if (x == null) throw new Exception("ViewModel not configured");
+
+            page.BindingContext = x;
+            
             return page;
         }
     }

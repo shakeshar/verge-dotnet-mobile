@@ -21,7 +21,8 @@
             <Color x:Key="VergePrimary3">#1DB8DC</Color>
             <Color x:Key="VergePrimary4">#04ADD4</Color>
             <Color x:Key="VergePrimary5">#027894</Color>
-           
+
+            <Color x:Key="VergePrimaryRed">#c40000</Color>
             <!--
             vIOS Colors
             -->

@@ -85,6 +85,7 @@ namespace Verge.Mobile.ViewModels
         private string ip;
         private string lastSeen;
         private string blocks;
+        private string status;
         #endregion
 
         #region Properties
@@ -94,6 +95,7 @@ namespace Verge.Mobile.ViewModels
         public string LastSeen { get { return lastSeen; } set { lastSeen = value; OnPropertyChanged(); } }
         public string Blocks { get { return blocks; } set { blocks = value; OnPropertyChanged(); } }
         public string Id { get; set; }
+        public string Status { get { return status; } set { status = value; OnPropertyChanged(); } }
         #endregion
         private readonly IVergeClient client;
         public RPCCredentials Cred { get; }
@@ -102,20 +104,30 @@ namespace Verge.Mobile.ViewModels
             this.Cred = cred;
             this.client = client;
             this.Url = Cred.Url;
-            
-            
+           
         }
         public async Task Load()
         {
             while(true)
             {
-               var result = await this.client.GetInfo();
-                LastSeen = DateTimeOffset.Now.ToString();
-                
-                IP = result.Data.Result.ip;
-                Blocks = result.Data.Result.blocks.ToString();
-                await Task.Delay(1000);
-                
+                try
+                {
+                    
+                    var result = await this.client.GetInfo();
+                    LastSeen = DateTimeOffset.Now.ToString();
+
+                    IP = result.Data.Result.ip;
+                    Blocks = result.Data.Result.blocks.ToString();
+                    Status = ":)";
+                }
+                catch (Exception e)
+                {
+                    Status = ":(";
+                }
+                finally
+                {
+                    await Task.Delay(1000);
+                }
             }
         }
 

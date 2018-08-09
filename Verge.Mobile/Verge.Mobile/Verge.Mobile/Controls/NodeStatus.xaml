@@ -32,6 +32,7 @@
                                 <Label  Text="{Binding IP}" />
                                 <Label  Text="{Binding Url}" />
                                 <Label  Text="{Binding LastSeen}" />
+                                <Label  Text="{Binding Status}" />
                             </StackLayout>
                             <Image HeightRequest="100" Aspect="AspectFit"   Grid.Row="0" Source="verge_symbol.png" Scale="1"     />
                         </Grid>

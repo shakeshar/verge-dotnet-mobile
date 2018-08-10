@@ -111,6 +111,7 @@ namespace Verge.Mobile.ViewModels
         public NodeStatusItemViewModel(IVergeClient client, RPCCredentials cred)
         {
             HttpClient client2 = new HttpClient();
+            client2.Timeout = new TimeSpan(0, 0, 5);
             resource = new BlockExplorerResource(client2, "https://verge-blockchain.info/");
        
             this.Cred = cred;
